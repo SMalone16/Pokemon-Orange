@@ -1,0 +1,8 @@
+.git
+.env
+.env.*
+config/database_info.json
+orange-backup.sql
+target
+.mvn-classpath
+*.log

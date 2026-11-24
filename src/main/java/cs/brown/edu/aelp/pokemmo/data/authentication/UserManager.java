@@ -5,15 +5,15 @@ import cs.brown.edu.aelp.pokemmo.data.DataSource.AuthException;
 import cs.brown.edu.aelp.pokemon.Main;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.util.Set;
 
 public final class UserManager {
 
-  private static final Map<Integer, User> users = new HashMap<>();
-  private static final Set<Integer> recentlyKicked = new HashSet<Integer>();
+  private static final Map<Integer, User> users = new ConcurrentHashMap<>();
+  private static final Set<Integer> recentlyKicked = ConcurrentHashMap.<Integer>newKeySet();
 
   private UserManager() {
   }
@@ -99,9 +99,10 @@ public final class UserManager {
    * unless by the saving thread, immediately after a save!
    */
   public static void purgeDisconnectedUsers() {
-    for (int id : users.keySet()) {
-      if (!users.get(id).isConnected()) {
-        users.remove(id);
+    for (Map.Entry<Integer, User> entry : users.entrySet()) {
+      User user = entry.getValue();
+      if (!user.isConnected()) {
+        users.remove(entry.getKey(), user);
       }
     }
   }
@@ -125,7 +126,7 @@ public final class UserManager {
    * @return an unmodifiable collection of Users
    */
   public static Collection<User> getAllUsers() {
-    return Collections.unmodifiableCollection(users.values());
+    return Collections.unmodifiableCollection(new ArrayList<>(users.values()));
   }
 
   /**

@@ -66,10 +66,10 @@ class Net {
 	constructor() {
 
 		this.host = window.location.hostname;
-    		this.port = 80;
+    		this.port = window.location.port;
 
 		this.cfg = {
-			url: 'ws://' + this.host + ':' + this.port.toString() + '/game',
+			url: (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/game',
 		};
 
 		this.chunkBaseURL = "/assets/maps/";
@@ -114,7 +114,7 @@ class Net {
 		}
 
 		waitForSocketConnection(this.socket, function(socket) {
-			console.log(net.packet(type, payload));
+
 			socket.send(net.packet(type, payload));
 		}.bind(this));
 	}
@@ -146,7 +146,6 @@ class Net {
 			game.state.start('Home');
 		};
 
-		console.log('Auth(' + this.id + ', ' + this.token + ')');
 
 		this.sendPacket(MESSAGE_TYPE.CONNECT, {
 			token: token
@@ -191,8 +190,8 @@ class Net {
 			Battle.endBattle();
 		}
 
-		Cookies.set("id", net.id);
-		Cookies.set("token", net.token);
+		Cookies.set("id", net.id, { secure: location.protocol === "https:", sameSite: "Strict" });
+		Cookies.set("token", net.token, { secure: location.protocol === "https:", sameSite: "Strict" });
 
 		Game.player.id = net.id;
 

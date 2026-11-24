@@ -22,6 +22,9 @@ public class LoginHandler implements Route {
     String pass = qm.value("password");
     Map<String, Object> vars = new HashMap<>();
     try {
+      if (user == null || pass == null || user.length() > 12 || pass.length() > 128) {
+        throw new AuthException("Invalid login credentials.");
+      }
       User u = UserManager.authenticate(user, pass);
       vars.put("success", true);
       vars.put("token", u.getToken());

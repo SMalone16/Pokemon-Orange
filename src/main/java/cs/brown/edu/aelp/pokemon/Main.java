@@ -36,8 +36,6 @@ import cs.brown.edu.aelp.util.JsonFile;
 import freemarker.template.Configuration;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,7 +56,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 public final class Main {
 
   private static World world = new World();
-  private static final int DEFAULT_PORT = 80;
+  private static final int DEFAULT_PORT = 4567;
   private static ThreadLocal<DataSource> datasrc;
   private static ThreadLocal<Gson> GSON = new ThreadLocal<Gson>() {
     @Override
@@ -102,22 +100,21 @@ public final class Main {
 
     // ip, port, database, user, pass
     try {
-      JsonFile cfg = new JsonFile("config/database_info.json");
-      String ip = cfg.getString("ip");
-      int port = cfg.getInt("port");
-      String db = cfg.getString("database");
-      String username = cfg.getString("username");
-      String password = cfg.getString("password");
+      // Compose supplies credentials directly; retain legacy local configuration.
+      String envPassword = System.getenv("DB_PASSWORD");
+      JsonFile cfg = envPassword == null ? new JsonFile("config/database_info.json") : null;
+      String ip = cfg == null ? System.getenv("DB_HOST") : cfg.getString("ip");
+      int port = cfg == null ? Integer.parseInt(System.getenv("DB_PORT")) : cfg.getInt("port");
+      String db = cfg == null ? System.getenv("DB_NAME") : cfg.getString("database");
+      String username = cfg == null ? System.getenv("DB_USER") : cfg.getString("username");
+      String password = cfg == null ? envPassword : cfg.getString("password");
       Main.datasrc = new ThreadLocal<DataSource>() {
         @Override
         protected DataSource initialValue() {
           try {
             return new SQLDataSource(ip, port, db, username, password);
           } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            System.out.println(
-                "ERROR: Something went wrong connecting to the database.");
-            return null;
+            throw new IllegalStateException("Database connection failed; check database service and credentials.", e);
           }
         }
       };
@@ -149,7 +146,7 @@ public final class Main {
     try {
       Main.getDataSource().loadLeaderboards();
     } catch (LoadException e1) {
-      e1.printStackTrace();
+      throw new IllegalStateException("Could not initialize database leaderboards.", e1);
     }
 
     // try to start the save-thread if we're backed by SQL
@@ -238,14 +235,30 @@ public final class Main {
     ch.registerCommand(kc);
     ch.registerCommand(idc);
 
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+      packetTimer.shutdownNow();
+      Spark.stop();
+      scheduler.shutdown();
+      try {
+        if (!scheduler.awaitTermination(10, TimeUnit.SECONDS)) {
+          scheduler.shutdownNow();
+        }
+        save.run();
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      } catch (RuntimeException e) {
+        e.printStackTrace();
+      }
+    }, "final-save"));
+
     ch.start();
 
   }
 
   private void runSparkServer(int port) {
-    Spark.webSocket("/game", PlayerWebSocketHandler.class);
-
     Spark.port(port);
+    Spark.ipAddress("0.0.0.0");
+    Spark.webSocket("/game", PlayerWebSocketHandler.class);
     Spark.externalStaticFileLocation("src/main/resources/static");
     Spark.exception(Exception.class, new ExceptionPrinter());
 
@@ -255,6 +268,9 @@ public final class Main {
     Spark.get("/", new IndexHandler(), freeMarker);
     Spark.post("/register", new RegisterHandler());
     Spark.post("/login", new LoginHandler());
+    Spark.get("/health", (req, res) -> "ok");
+    Spark.awaitInitialization();
+    System.out.printf("Pokemon Orange ready on port %d.%n", port);
 
     // Setup Spark Routes
   }
@@ -265,7 +281,8 @@ public final class Main {
   private static class IndexHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      return new ModelAndView(ImmutableMap.of(), "index.ftl");
+      return new ModelAndView(ImmutableMap.of("chatEnabled",
+          "true".equalsIgnoreCase(System.getenv("ENABLE_CHAT"))), "index.ftl");
     }
   }
 
@@ -294,13 +311,8 @@ public final class Main {
     @Override
     public void handle(Exception e, Request req, Response res) {
       res.status(500);
-      StringWriter stacktrace = new StringWriter();
-      try (PrintWriter pw = new PrintWriter(stacktrace)) {
-        pw.println("<pre>");
-        e.printStackTrace(pw);
-        pw.println("</pre>");
-      }
-      res.body(stacktrace.toString());
+      e.printStackTrace();
+      res.body("Internal server error.");
     }
   }
 

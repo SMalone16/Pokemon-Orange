@@ -20,11 +20,17 @@ public class RegisterHandler implements Route {
     QueryParamsMap qm = req.queryMap();
     String user = qm.value("username");
     String pass = qm.value("password");
-    String email = qm.value("email");
+    String code = qm.value("classCode");
+    // No student email addresses are collected. Preserve the existing unique DB field.
+    String email = user == null ? null : user + "@players.invalid";
     String species = qm.value("species");
     String nickname = qm.value("nickname");
     Map<String, Object> vars = new HashMap<>();
     try {
+      String expectedCode = System.getenv("CLASS_CODE");
+      if (expectedCode != null && !expectedCode.equals(code)) {
+        throw new AuthException("Incorrect class code.");
+      }
       validateInput(user, pass, email, species, nickname);
       User u = UserManager.register(user, pass, email, species, nickname);
       vars.put("success", true);
@@ -39,6 +45,13 @@ public class RegisterHandler implements Route {
 
   public boolean validateInput(String name, String pass, String email,
       String species, String nickname) throws AuthException {
+    if (name == null || pass == null || email == null
+        || species == null || nickname == null) {
+      throw new AuthException("Complete all fields.");
+    }
+    if (!name.matches("[A-Za-z0-9]{4,12}")) {
+      throw new AuthException("Username: 4-12 letters or numbers.");
+    }
     if (name.length() <= 3) {
       throw new AuthException("Username too short.");
     }
@@ -64,6 +77,9 @@ public class RegisterHandler implements Route {
     // "Password must have 8 chars, a digit, symbol, and both cases.");
     // }
 
+    if (pass.length() > 128) {
+      throw new AuthException("Password is too long.");
+    }
     if (pass.length() < 8) {
       throw new AuthException("Password must be at least 8 characters.");
     }
@@ -75,6 +91,9 @@ public class RegisterHandler implements Route {
 
     if (nickname.length() <= 3) {
       throw new AuthException("Pokemon nickname too short.");
+    }
+    if (!nickname.matches("[A-Za-z0-9]{4,12}")) {
+      throw new AuthException("Pokemon nickname: 4-12 letters or numbers.");
     }
     if (nickname.length() >= 13) {
       throw new AuthException("Pokemon nickname too long.");

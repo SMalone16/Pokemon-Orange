@@ -108,10 +108,20 @@ public class PlayerWebSocketHandler {
   public void onMessage(Session session, String message) {
     // we have received a websocket message
     // this message will be a JSON object (in string form)
+    if (message == null || message.length() > 65536) {
+      session.close(1009, "Message too large");
+      return;
+    }
+    try {
     JsonObject received = GSON.fromJson(message, JsonObject.class);
     JsonObject payload = received.getAsJsonObject("payload");
 
-    switch (MESSAGE_TYPES[received.get("type").getAsInt()]) {
+    int type = received.get("type").getAsInt();
+    if (type < 0 || type >= MESSAGE_TYPES.length || payload == null) {
+      session.close(1008, "Invalid message");
+      return;
+    }
+    switch (MESSAGE_TYPES[type]) {
     case CONNECT:
       handleConnect(session, payload);
       break;
@@ -145,7 +155,9 @@ public class PlayerWebSocketHandler {
     default:
       // something went wrong, we got an unknown message type
     }
-
+    } catch (RuntimeException e) {
+      session.close(1008, "Invalid message");
+    }
   }
 
   private static void handleConnect(Session session, JsonObject payload) {
@@ -280,7 +292,7 @@ public class PlayerWebSocketHandler {
 
     int id = payload.get("id").getAsInt();
     User user = UserManager.getUserById(id);
-    if (!user.isConnected() || !user.getSession().equals(session)) {
+    if (user == null || !user.isConnected() || !user.getSession().equals(session)) {
       System.err.println("Bad Session");
       session.close();
       return;
@@ -369,6 +381,9 @@ public class PlayerWebSocketHandler {
   }
 
   private static void handleChat(Session session, JsonObject payload) {
+    if (!"true".equalsIgnoreCase(System.getenv("ENABLE_CHAT"))) {
+      return;
+    }
     int id = payload.get("id").getAsInt();
     User u = UserManager.getUserById(id);
     if (u == null || u.getSession() != session) {
@@ -376,7 +391,7 @@ public class PlayerWebSocketHandler {
       return;
     }
     String msg = payload.get("message").getAsString();
-    if (msg.length() == 0) {
+    if (msg.length() == 0 || msg.length() > 200) {
       return;
     }
     // client will sanitize to avoid injection
@@ -407,6 +422,10 @@ public class PlayerWebSocketHandler {
     }
     int challenged = payload.get("challenged_id").getAsInt();
     User u2 = UserManager.getUserById(challenged);
+    if (u2 == null || !u2.isConnected()) {
+      PacketSender.sendChallengeResponse(u1, "busy");
+      return;
+    }
     double dist = u1.getLocation().dist(u2.getLocation());
     if (dist < 0 || dist > 8) {
       return;
@@ -513,7 +532,7 @@ public class PlayerWebSocketHandler {
       return;
     }
     int item_id = payload.get("item_id").getAsInt();
-    if (item_id >= ItemType.values().length) {
+    if (item_id < 0 || item_id >= ItemType.values().length) {
       u.kick();
       System.out.printf("%s tried to buy an invalid item: %d%n",
           u.getUsername(), item_id);
@@ -522,9 +541,10 @@ public class PlayerWebSocketHandler {
     ItemType t = ItemType.values()[item_id];
     int cost = Item.getCost(t);
     int amt = payload.get("quantity").getAsInt();
+    if (amt <= 0 || (long) cost * amt > Integer.MAX_VALUE) {
+      return;
+    }
     int total = cost * amt;
-    // overflow?! :O
-    assert total >= 0;
     if (total > u.getCurrency()) {
       u.kick();
       System.out.printf("%s tried to buy more than they could afford.%n",

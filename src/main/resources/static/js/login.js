@@ -3,12 +3,12 @@
  */
 function register(username, email, password, species, nickname, success, fail) {
 
-	if (username.includes("<") || username.includes(";")) {
-		window.location.replace('https://cs.brown.edu/media/filer_public_thumbnails/filer_public/2013/06/06/jannotti.jpg__120x180_q85_crop-1_subsampling-2.jpg');
+	if (!username || !/^[A-Za-z0-9]{4,12}$/.test(username)) {
+		fail({success: false, error: "Use 4-12 letters or numbers."});
 		return;
 	}
 	
-	let registerURL = 'http://' + net.host + ':' + net.port.toString() + '/register';
+	let registerURL = '/register';
 	
 	error = false;
 	
@@ -17,7 +17,7 @@ function register(username, email, password, species, nickname, success, fail) {
 	} else if (password == undefined) {
 		error = 'Please input a password.';
 	} else if (email == undefined) {
-		error = 'Please input an email.';
+		error = 'Please enter your class code.';
 	} else if (species == undefined) {
 		error = 'Please select a pokemon.';
 	} else if (nickname == undefined) {
@@ -38,7 +38,7 @@ function register(username, email, password, species, nickname, success, fail) {
 		url: registerURL,
 		data: {
 			username: username,
-			email: email,
+			classCode: email,
 			password: password,
 			species: species,
 			nickname: nickname
@@ -76,7 +76,7 @@ function register(username, email, password, species, nickname, success, fail) {
 
 function login(username, password, success, fail) {
 	
-	let loginURL = 'http://' + net.host + ':' + net.port.toString() + '/login';
+	let loginURL = '/login';
 	
 	error = false;
 	

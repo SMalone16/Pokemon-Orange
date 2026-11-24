@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Pokemon Brown</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+		<title>Pokemon Orange</title>
+		<script>window.CLASSROOM_CHAT_ENABLED = <#if chatEnabled>true<#else>false</#if>;</script>
+		<script src="/js/lib/jquery.min.js"></script>
+		<script src="/js/lib/js.cookie.min.js"></script>
 		<script src="/js/lib/phaser.min.js"></script>
 		<script src="/js/lib/easystar.min.js"></script>
 		<script src="/js/lib/slick-ui.min.js"></script>

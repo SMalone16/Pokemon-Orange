@@ -115,7 +115,9 @@ Game.create = function() {
 	Game.ready = true;
 	game.camera.roundPx = true;
 
-	$("#chat-container").css('width', '300px').css('visibility', 'visible');
+	if (window.CLASSROOM_CHAT_ENABLED) {
+		$("#chat-container").css('width', '300px').css('visibility', 'visible');
+	}
 
 	$("#chat-input").on('keypress', function (e) {
          if (e.which === 13) {

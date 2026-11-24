@@ -1,0 +1,42 @@
+name: pokemon-orange
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: pokemon_orange
+      POSTGRES_USER: pokemon
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Run bash start.sh first}
+    volumes:
+      - player-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "PGPASSWORD=$$POSTGRES_PASSWORD psql -h 127.0.0.1 -U $$POSTGRES_USER -d $$POSTGRES_DB -w -c 'SELECT 1' >/dev/null"]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+  game:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: pokemon_orange
+      DB_USER: pokemon
+      DB_PASSWORD: ${DB_PASSWORD:?Run bash start.sh first}
+      CLASS_CODE: ${CLASS_CODE:?Run bash start.sh first}
+      ENABLE_CHAT: ${ENABLE_CHAT:-false}
+    ports:
+      - "127.0.0.1:4567:4567"
+    stdin_open: true
+    tty: true
+    stop_grace_period: 30s
+    restart: "no"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/4567; printf 'GET /health HTTP/1.0\r\nHost: localhost\r\n\r\n' >&3; grep -q '200 OK' <&3"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+volumes:
+  player-data:

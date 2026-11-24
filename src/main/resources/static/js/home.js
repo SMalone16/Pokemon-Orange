@@ -163,7 +163,7 @@ Home.createPasswordField = function() {
 		font: '18px pixel',
 		placeHolderColor: '#EEEEEE',
 		cursorColor: '#EEEEEE',
-		placeHolder: 'Password',
+		placeHolder: 'Game-only password',
 		type: PhaserInput.InputType.password
 	});
 
@@ -219,12 +219,12 @@ Home.displayRegister = function() {
 	Home.scroll.addChild(Home.statusText);
 
 	// (Home.scroll.width / 2) - (Home.inputField.width / 2);
-	Home.userField = Home.createUsernameField();
+	Home.userField = Home.createUsernameField('Player nickname');
 	Home.userField.x = (Home.scroll.width / 2) - (Home.userField.width / 2) - Home.userField.inputOptions.padding;
 	Home.userField.y -= 90;
 	Home.scroll.addChild(Home.userField);
 	
-	Home.emailField = Home.createUsernameField("Email");
+	Home.emailField = Home.createUsernameField("Class code");
 	Home.emailField.x = (Home.scroll.width / 2) - (Home.userField.width / 2) - Home.userField.inputOptions.padding;
 	Home.emailField.y = Home.userField.y + Home.userField.height + 15;
 	Home.scroll.addChild(Home.emailField);
