@@ -131,7 +131,7 @@ public class PvPBattle extends Battle {
 
       if (turn.getTrainer().allPokemonKnockedOut()) {
         victory(other(turn.getTrainer()));
-        break;
+        return;
       }
     }
 

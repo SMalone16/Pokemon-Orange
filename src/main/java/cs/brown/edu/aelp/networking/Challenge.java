@@ -18,12 +18,13 @@ public class Challenge {
     this.timestamp = System.currentTimeMillis();
     from.setChallenge(this);
     to.setChallenge(this);
-    this.timer = new Timer();
+    this.timer = new Timer(true);
     this.timer.schedule(new TimerTask() {
       @Override
       public void run() {
-        from.setChallenge(null);
-        to.setChallenge(null);
+        if (from.getChallenge() != Challenge.this || to.getChallenge() != Challenge.this) return;
+        cancel();
+        Challenge.this.cancel();
         PacketSender.sendChallengeResponse(from, "expired");
         PacketSender.sendChallengeResponse(to, "expired");
       }

@@ -59,7 +59,8 @@ public class PlayerWebSocketHandler {
     UPDATE_TEAM,
     OPEN_POKE_CONSOLE,
     BUY_ITEM,
-    HEARTBEAT
+    HEARTBEAT,
+    ORANGE_SHOP
   }
 
   public static enum OP_CODES {
@@ -159,6 +160,15 @@ public class PlayerWebSocketHandler {
     case BUY_ITEM:
       handleBuyItem(session, payload);
       break;
+    case ORANGE_SHOP:
+      User shopper=UserManager.getUserById(payload.get("id").getAsInt());
+      if(shopper==null || shopper.getSession()!=session) { session.close(); break; }
+      int shop=payload.get("shop").getAsInt();
+      if("rob".equals(payload.get("action").getAsString()))
+        cs.brown.edu.aelp.pokemmo.map.OrangeWorld.rob(shopper,shop);
+      else if("buy".equals(payload.get("action").getAsString()))
+        cs.brown.edu.aelp.pokemmo.map.OrangeWorld.purchase(shopper,shop,payload.get("item").getAsInt(),payload.get("quantity").getAsInt());
+      break;
     default:
       // something went wrong, we got an unknown message type
     }
@@ -202,7 +212,7 @@ public class PlayerWebSocketHandler {
       JsonObject tile = (JsonObject) o;
       Location loc = new Location(c, tile.get("row").getAsInt(),
           tile.get("col").getAsInt());
-      if (loc.getRow() < 0 || loc.getRow() >= c.getHeight() || loc.getCol() < 0 || loc.getCol() >= c.getWidth()) return;
+      if (!c.isWalkable(loc.getRow(),loc.getCol())) return;
       Location previous = locs.isEmpty() ? current : locs.get(locs.size() - 1);
       if (Math.abs(previous.getRow() - loc.getRow()) + Math.abs(previous.getCol() - loc.getCol()) > (locs.isEmpty() ? 2 : 1)) return;
       locs.add(loc);
@@ -310,6 +320,7 @@ public class PlayerWebSocketHandler {
     }
 
     Battle battle = user.getCurrentBattle();
+    if (battle == null || battle.getBattleState() == BattleState.DONE) return;
 
     Turn t = null;
     switch (ACTION_TYPES[payload.get("action").getAsInt()]) {
@@ -411,16 +422,11 @@ public class PlayerWebSocketHandler {
     PacketSender.queueOpForChunk(chat, u.getLocation().getChunk());
   }
 
-  private static void handleChallenge(Session session, JsonObject payload) {
+  private static synchronized void handleChallenge(Session session, JsonObject payload) {
     int id = payload.get("id").getAsInt();
     User u1 = UserManager.getUserById(id);
     if (u1 == null || u1.getSession() != session) {
       session.close();
-      return;
-    }
-    CHUNK_TYPE t = u1.getLocation().getChunk().getType();
-    if (t == CHUNK_TYPE.HEAL || t == CHUNK_TYPE.PASSIVE) {
-      PacketSender.sendChallengeResponse(u1, "disabled");
       return;
     }
     if (u1.getChallenge() != null) {
@@ -431,27 +437,31 @@ public class PlayerWebSocketHandler {
     if (!payload.has("challenged_id")) {
       return;
     }
+    if (u1.isBusy() || u1.allPokemonKnockedOut()) { PacketSender.sendChallengeResponse(u1,"busy"); return; }
     int challenged = payload.get("challenged_id").getAsInt();
+    if (challenged == id) { PacketSender.sendChallengeResponse(u1,"busy"); return; }
     User u2 = UserManager.getUserById(challenged);
     if (u2 == null || !u2.isConnected()) {
       PacketSender.sendChallengeResponse(u1, "busy");
       return;
     }
     double dist = u1.getLocation().dist(u2.getLocation());
-    if (dist < 0 || dist > 8) {
+    if (dist < 0 || dist > 5) {
+      PacketSender.sendChallengeResponse(u1,"too far away");
       return;
     }
-    if (u2 == null || u2.isBusy()) {
+    if (u2.isBusy() || u2.allPokemonKnockedOut()) {
       PacketSender.sendChallengeResponse(u1, "busy");
       return;
     }
     // we actually don't need to do anything with this object, even tho it feels
     // weird
+    u1.setPath(null); u2.setPath(null);
     new Challenge(u1, u2);
     PacketSender.sendBattleChallenge(u2, u1);
   }
 
-  private static void handleChallengeResponse(Session session,
+  private static synchronized void handleChallengeResponse(Session session,
       JsonObject payload) {
     int id = payload.get("id").getAsInt();
     User u1 = UserManager.getUserById(id);
@@ -470,6 +480,14 @@ public class PlayerWebSocketHandler {
     }
     User u2 = u1.getChallenge().getFrom();
     u1.getChallenge().cancel();
+    double distance=u1.getLocation().dist(u2.getLocation());
+    if (!u2.isConnected() || u1.isBusy() || u2.isBusy() || distance<0 || distance>5
+        || u1.allPokemonKnockedOut() || u2.allPokemonKnockedOut()) {
+      PacketSender.sendChallengeResponse(u1,"busy");
+      PacketSender.sendChallengeResponse(u2,"busy");
+      return;
+    }
+    u1.setPath(null); u2.setPath(null);
     BattleManager.getInstance().createPvPBattle(u1, u2);
   }
 

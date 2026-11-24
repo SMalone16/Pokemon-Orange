@@ -76,6 +76,9 @@ public class World {
       for (int j = 0; j < tiles.size(); j++) {
         int row = j / chunk.getWidth();
         int col = j % chunk.getWidth();
+        if ("Collision".equals(layers.get(i).getString("name"))) {
+          chunk.setBlocked(row, col, tiles.get(j) != 0);
+        }
         if (tiles.get(j) == BUSH_ID) {
           chunk.addEntity(new Bush(new Location(chunk, row, col)));
         }

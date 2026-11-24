@@ -28,6 +28,7 @@ public class Chunk extends Identifiable {
   private static int NEXT_DYNAMIC_ID = 0;
 
   private final boolean[][] grass;
+  private final boolean[][] blocked;
   private List<Entity> entities = new ArrayList<>();
   private Set<Integer> usersHere = new ConcurrentHashSet<>();
   private final String fileName;
@@ -38,6 +39,12 @@ public class Chunk extends Identifiable {
     this.width = width;
     this.height = height;
     this.grass = new boolean[this.width][this.height];
+    this.blocked = new boolean[height][width];
+  }
+
+  public void setBlocked(int row,int col,boolean value) { blocked[row][col]=value; }
+  public boolean isWalkable(int row,int col) {
+    return row>=0 && row<height && col>=0 && col<width && !blocked[row][col];
     this.fileName = fileName;
   }
 
