@@ -40,12 +40,12 @@ public class Chunk extends Identifiable {
     this.height = height;
     this.grass = new boolean[this.width][this.height];
     this.blocked = new boolean[height][width];
+    this.fileName = fileName;
   }
 
   public void setBlocked(int row,int col,boolean value) { blocked[row][col]=value; }
   public boolean isWalkable(int row,int col) {
     return row>=0 && row<height && col>=0 && col<width && !blocked[row][col];
-    this.fileName = fileName;
   }
 
   public void setType(CHUNK_TYPE type) {

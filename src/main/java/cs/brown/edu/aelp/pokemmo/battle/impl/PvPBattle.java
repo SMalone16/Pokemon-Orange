@@ -368,7 +368,8 @@ public class PvPBattle extends Battle {
     }
   }
 
-  public void victory(Trainer t) {
+  public synchronized void victory(Trainer t) {
+    if (getBattleState() == BattleState.DONE) return;
     System.out.println("Victory for: " + t.getId());
 
     this.setLastBattleUpdate(this.getPendingBattleUpdate());

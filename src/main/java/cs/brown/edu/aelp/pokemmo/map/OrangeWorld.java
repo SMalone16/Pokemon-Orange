@@ -63,6 +63,7 @@ public final class OrangeWorld {
   private static void escalate(Heat h,Location p,long now) {
     h.wanted=Math.min(5,h.wanted+1); h.lastSeen=now; h.lastRow=p.getRow();
     h.lastCol=p.getCol(); h.searching=false; h.defeated=0;
+    Arrays.sort(h.officers, (a,b) -> Integer.compare(distance(p.getRow(),p.getCol(),a[0],a[1]),distance(p.getRow(),p.getCol(),b[0],b[1])));
     Arrays.fill(h.down,0); h.graceUntil=now+GRACE;
   }
   public static void purchase(User u,int shop,int item,int quantity) {
@@ -120,9 +121,8 @@ public final class OrangeWorld {
         for(int i=0;i<HOMES.length;i++) {
           int offset=(int)((now/1800+i)%6);
           int col=HOMES[i][1]+(offset<=3?offset:6-offset);
-          if(p.getChunk().getId()==1 && p.getChunk().isWalkable(HOMES[i][0],col))
-            h.officers[i][1]=col;
           h.officers[i][0]=HOMES[i][0];
+          h.officers[i][1]=p.getChunk().getId()==1 && p.getChunk().isWalkable(HOMES[i][0],col)?col:HOMES[i][1];
         }
         return;
       }

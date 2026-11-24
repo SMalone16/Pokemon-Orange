@@ -382,16 +382,10 @@ public class PlayerWebSocketHandler {
     synchronized (battle) {
 
       if (t == null || !battle.getBattleState().equals(BattleState.WAITING)) {
-        System.err.println("Not waiting");
-        user.kick();
         return;
       }
 
-      if (!battle.setTurn(t)) {
-        System.err.println("Bad Turn");
-        user.kick();
-        return;
-      }
+      if (!battle.setTurn(t)) return;
 
       if (battle.getBattleState().equals(BattleState.READY)) {
         battle.evaluate();

@@ -393,7 +393,7 @@ public class WildBattle extends Battle {
     }
   }
 
-  public void victory(Trainer t) {
+  public synchronized void victory(Trainer t) {
     if (getBattleState().equals(BattleState.DONE)) return;
     System.out.println("Victory for: " + t.getId());
 
@@ -415,8 +415,6 @@ public class WildBattle extends Battle {
     PacketSender.sendEndBattlePacket(this.getId(), this.getWinner().getId(),
         this.getLoser().getId(), 0, 0);
 
-    setBattleState(BattleState.DONE);
-
     User u;
     if (winner instanceof User) {
       u = (User) winner;
@@ -430,6 +428,7 @@ public class WildBattle extends Battle {
     }
 
     if (npcResult != null) npcResult.accept(winner == a && wild.isKnockedOut());
+    setBattleState(BattleState.DONE);
     boolean needsHeal = true;
     for (Pokemon p : u.getTeam()) {
       if (p.getCurrHp() != 0) {

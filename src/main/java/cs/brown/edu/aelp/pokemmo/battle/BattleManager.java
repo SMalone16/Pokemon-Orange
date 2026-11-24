@@ -38,8 +38,8 @@ public class BattleManager {
     return RandomWildPokemon.generateWildPokemon(avgLvl);
   }
 
-  public WildBattle createWildBattle(User u) {
-    if (u.isInBattle()) {
+  public synchronized WildBattle createWildBattle(User u) {
+    if (u.isBusy() || u.allPokemonKnockedOut()) {
       return null;
     }
     int id = getNewId();
