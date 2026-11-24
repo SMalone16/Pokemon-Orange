@@ -161,7 +161,7 @@ class Net {
 				Cookies.remove("id");
 				Cookies.remove("token");
 				this.retryCount = 0;
-				this.showConnection("Session expired. Choose a new unused name.");
+				this.showConnection("Session expired. Enter your name and recovery code.");
 				game.state.start("Home");
 				return;
 			}
@@ -245,6 +245,8 @@ class Net {
 
 			if (player.id == net.id) {
 				Game.player.username = player.username;
+				Home.remember(player.username, this.id, this.token);
+				Home.recoveryButton();
 				Game.player.items = player.items;
 				Game.player.pokemon = player.pokemon;
                 Game.player.currency = player.currency;
@@ -528,7 +530,7 @@ class Net {
 		const data = JSON.parse(event.data);
 
 		if (data.type in this.handlers) {
-			this.handlers[data.type](data);
+			this.handlers[data.type].call(this, data);
 		} else {
 			console.log('Unknown message type!', data.type);
 		}

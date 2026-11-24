@@ -1,178 +1,182 @@
 {
-    "chunks" :
-    [
+  "chunks": [
+    {
+      "id": 1,
+      "file": "main_chunk.json",
+      "portals": [
         {
-            "id" : 1,
-            "file" : "main_chunk.json",
-            "portals" :
-            [
-                {
-                    "location" :
-                    {
-                        "row" : 26,
-                        "col" : 30
-                    },
-                    "goto" :
-                    {
-                        "chunk" : 2,
-                        "row" : 38,
-                        "col" : 30
-                    }
-                },
-                {
-                    "location" :
-                    {
-                        "row" : 36,
-                        "col" : 21
-                    },
-                    "goto" :
-                    {
-                        "chunk" : 3,
-                        "row" : 35,
-                        "col" : 30
-                    }
-                },
-                {
-                    "location" :
-                    {
-                        "row" : 37,
-                        "col" : 45
-                    },
-                    "goto" :
-                    {
-                        "chunk" : 4,
-                        "row" : 35,
-                        "col" : 30
-                    }
-                }
-            ]
+          "location": {
+            "row": 26,
+            "col": 30
+          },
+          "goto": {
+            "chunk": 2,
+            "row": 38,
+            "col": 30
+          }
         },
         {
-            "id" : 2,
-            "file" : "pokecenter.json",
-            "type" : "heal",
-            "portals" :
-            [
-				{
-                    "location" :
-                    {
-                        "row" : 39,
-                        "col" : 30
-                    },
-                    "goto" :
-                    {
-                        "chunk" : 1,
-                        "row" : 27,
-                        "col" : 30
-                    }
-                },
-                {
-                    "location" :
-                    {
-                        "row" : 39,
-                        "col" : 31
-                    },
-                    "goto" :
-                    {
-                        "chunk" : 1,
-                        "row" : 27,
-                        "col" : 30
-                    }
-                }
-            ],
-            "consoles" :
-            [
-                {
-                    "row" : 23,
-                    "col" : 25
-                },
-                {
-                    "row" : 24,
-                    "col" : 25
-                },
-                {
-                    "row" : 25,
-                    "col" : 25
-                },
-                {
-                    "row" : 26,
-                    "col" : 25
-                },
-                {
-                    "row" : 27,
-                    "col" : 25
-                },
-                {
-                    "row" : 28,
-                    "col" : 25
-                }
-            ]
+          "location": {
+            "row": 36,
+            "col": 21
+          },
+          "goto": {
+            "chunk": 3,
+            "row": 35,
+            "col": 30
+          }
         },
         {
-            "id" : 3,
-            "file" : "house_inside.json",
-            "portals" :
-            [
-				{
-                    "location" :
-                    {
-                        "row" : 36,
-                        "col" : 30
-                    },
-                    "goto" :
-                    {
-                        "chunk" : 1,
-                        "row" : 37,
-                        "col" : 21
-                    }
-                },
-                {
-                    "location" :
-                    {
-                        "row" : 36,
-                        "col" : 31
-                    },
-                    "goto" :
-                    {
-                        "chunk" : 1,
-                        "row" : 37,
-                        "col" : 21
-                    }
-                }
-            ]
+          "location": {
+            "row": 37,
+            "col": 45
+          },
+          "goto": {
+            "chunk": 4,
+            "row": 35,
+            "col": 30
+          }
         },
-                {
-            "id" : 4,
-            "file" : "house_inside.json",
-            "portals" :
-            [
-				{
-                    "location" :
-                    {
-                        "row" : 36,
-                        "col" : 30
-                    },
-                    "goto" :
-                    {
-                        "chunk" : 1,
-                        "row" : 38,
-                        "col" : 45
-                    }
-                },
-                {
-                    "location" :
-                    {
-                        "row" : 36,
-                        "col" : 31
-                    },
-                    "goto" :
-                    {
-                        "chunk" : 1,
-                        "row" : 38,
-                        "col" : 45
-                    }
-                }
-            ]
+        {
+          "location": {
+            "row": 27,
+            "col": 34
+          },
+          "goto": {
+            "chunk": 5,
+            "row": 50,
+            "col": 18
+          }
         }
-    ]
+      ]
+    },
+    {
+      "id": 2,
+      "file": "pokecenter.json",
+      "type": "heal",
+      "portals": [
+        {
+          "location": {
+            "row": 39,
+            "col": 30
+          },
+          "goto": {
+            "chunk": 1,
+            "row": 27,
+            "col": 30
+          }
+        },
+        {
+          "location": {
+            "row": 39,
+            "col": 31
+          },
+          "goto": {
+            "chunk": 1,
+            "row": 27,
+            "col": 30
+          }
+        }
+      ],
+      "consoles": [
+        {
+          "row": 23,
+          "col": 25
+        },
+        {
+          "row": 24,
+          "col": 25
+        },
+        {
+          "row": 25,
+          "col": 25
+        },
+        {
+          "row": 26,
+          "col": 25
+        },
+        {
+          "row": 27,
+          "col": 25
+        },
+        {
+          "row": 28,
+          "col": 25
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "file": "house_inside.json",
+      "portals": [
+        {
+          "location": {
+            "row": 36,
+            "col": 30
+          },
+          "goto": {
+            "chunk": 1,
+            "row": 37,
+            "col": 21
+          }
+        },
+        {
+          "location": {
+            "row": 36,
+            "col": 31
+          },
+          "goto": {
+            "chunk": 1,
+            "row": 37,
+            "col": 21
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "file": "house_inside.json",
+      "portals": [
+        {
+          "location": {
+            "row": 36,
+            "col": 30
+          },
+          "goto": {
+            "chunk": 1,
+            "row": 38,
+            "col": 45
+          }
+        },
+        {
+          "location": {
+            "row": 36,
+            "col": 31
+          },
+          "goto": {
+            "chunk": 1,
+            "row": 38,
+            "col": 45
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "file": "frontier.json",
+      "portals": [
+        {
+          "location": {
+            "row": 50,
+            "col": 17
+          },
+          "goto": {
+            "chunk": 1,
+            "row": 27,
+            "col": 33
+          }
+        }
+      ]
+    }
+  ]
 }

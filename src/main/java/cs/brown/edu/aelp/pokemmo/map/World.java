@@ -76,7 +76,8 @@ public class World {
       for (int j = 0; j < tiles.size(); j++) {
         int row = j / chunk.getWidth();
         int col = j % chunk.getWidth();
-        if (tiles.get(j) == BUSH_ID) {
+        boolean encounterLayer = "Encounters".equals(layers.get(i).getString("name"));
+        if ((encounterLayer && tiles.get(j) != 0) || (!encounterLayer && tiles.get(j) == BUSH_ID)) {
           chunk.addEntity(new Bush(new Location(chunk, row, col)));
         }
       }

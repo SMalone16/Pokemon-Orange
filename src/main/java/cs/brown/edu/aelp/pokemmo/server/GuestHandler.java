@@ -25,9 +25,24 @@ public class GuestHandler implements Route {
         throw new AuthException("Use 4-12 letters or numbers.");
       }
       name = name.trim();
-      String starter = STARTERS[ThreadLocalRandom.current().nextInt(STARTERS.length)];
-      User u = UserManager.register(name, UUID.randomUUID().toString(),
-          name + "@players.invalid", starter, starter);
+      String resumeId = req.queryParams("id");
+      String resumeToken = req.queryParams("token");
+      User u;
+      if (resumeId != null || resumeToken != null) {
+        if (resumeId == null || resumeToken == null || !resumeId.matches("[0-9]{1,10}")) {
+          throw new AuthException("Invalid recovery code.");
+        }
+        try {
+          u = UserManager.authenticate(Integer.parseInt(resumeId), resumeToken);
+        } catch (AuthException | NumberFormatException e) {
+          throw new AuthException("Could not resume this player. Check your recovery code.");
+        }
+        if (!name.equals(u.getUsername())) throw new AuthException("Recovery code does not match that name.");
+      } else {
+        String starter = STARTERS[ThreadLocalRandom.current().nextInt(STARTERS.length)];
+        u = UserManager.register(name, UUID.randomUUID().toString(),
+            name + "@players.invalid", starter, starter);
+      }
       out.put("success", true);
       out.put("id", u.getId());
       out.put("token", u.getToken());

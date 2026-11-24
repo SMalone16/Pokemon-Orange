@@ -9,7 +9,7 @@ In the repository Codespace:
 git pull origin master
 bash start.sh
 ```
-Open port 4567 privately; test with two separate browser profiles. If permitted by school policy, make the game port public and share the URL during class only. PostgreSQL is private. Students enter an unused fictional name (4–12 letters/numbers); a random starter is assigned. No email, code or password is requested. A random browser token owns the account; the same name cannot be claimed from another browser. Keep the same browser/profile to resume; clearing cookies, logging out or changing devices may require a new name. Legacy accounts can resume with their existing token; the old login screen is no longer offered. Do not use real student names. Chat remains off by default. Name-only registration is open to anyone with the URL; this is not school authentication. Make the port private after class.
+Open port 4567 privately; test with two separate browser profiles. If permitted by school policy, make the game port public and share the URL during class only. PostgreSQL is private. Students enter an unused fictional name (4–12 letters/numbers); a random starter is assigned. No email, code or password is requested. A random browser token owns the account; the same name cannot be claimed from another browser. Returning players resume automatically on the same browser/profile or enter their display name to reuse the locally stored account credential. To use another device, copy the private Recovery code from the game and enter it with the same display name. Keep that code private; names alone cannot take over an existing account. Existing players whose original browser credentials are already lost cannot be recovered by this mechanism. Legacy accounts can resume with their existing token; the old login screen is no longer offered. Do not use real student names. Chat remains off by default. Name-only registration is open to anyone with the URL; this is not school authentication. Make the port private after class.
 
 ## Controls and reconnecting
 
@@ -40,3 +40,11 @@ The script downloads missing Gen I front/back sprites into git-ignored art-overr
 - Back up: `docker compose exec -T db pg_dump -U pokemon -d pokemon_orange > orange-backup.sql`. Store securely; do not commit. Do not delete .env or the volume. Rebuilds and Codespace deletion can destroy local Docker data.
 
 Original project: https://github.com/felixs-alt/Pokemon-Brown
+
+## Orange Frontier and experience
+
+New players spawn in the 96×96 BrowserQuest-derived Frontier. Existing saves remain in their original chunk. From the old town spawn, walk east to row 27, column 34; from the Frontier arrival tile, step one tile west to return. Wild encounters are scattered on connected routes away from arrival. See [FRONTIER-CREDITS.md](FRONTIER-CREDITS.md) for source, CC BY-SA 3.0 license and adaptations. The first build downloads and verifies the pinned map and tilesheet.
+
+Wild knockouts and completed PvP victories grant experience to surviving team Pokémon using the existing level-based formula; captures, running, losing and forfeits do not grant XP. The victory screen shows total earned XP. Existing level and experience data are saved in PostgreSQL.
+
+After updating, test with two browser profiles: join, win a wild battle, verify XP, close/reopen, and recover using the same name and private recovery code. Test both Frontier portals and verify blocked terrain. A database backup before updating is recommended.

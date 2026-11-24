@@ -73,6 +73,7 @@ Game.update = function() {
 Game.preload = function() {
 	game.stage.disableVisibilityChange = true;
 	game.load.image('tileset', 'assets/tilesets/tileset.png');
+	game.load.image('frontier', 'assets/tilesets/frontier.png');
 
 	game.load.atlasJSONHash('atlas1', 'assets/sprites/pokemon_atlas1.png', 'assets/sprites/pokemon_atlas1.json');
 	game.load.atlasJSONHash('atlas2', 'assets/sprites/pokemon_atlas2.png', 'assets/sprites/pokemon_atlas2.json');
@@ -168,17 +169,19 @@ Game.moveGroupTo = function(parent,group,endPos){
 Game.drawLayers = function() {
 
 	/* TODO: Cleanup */
-	Game.layerNames = ['Base', 'Walk', 'Walkable', 'Collision', 'Top'];//, 'Bush'];
+	const frontier = Game.map.tilesets.some(t => t.name === 'frontier');
+	Game.layerNames = frontier ? Game.map.layers.map(l => l.name).filter(n => n !== 'Encounters') : ['Base', 'Walk', 'Walkable', 'Collision', 'Top'];
 	Game.map.gameLayers = {};
 
 	for(idx in Game.layerNames) {
 
 		let layerName = Game.layerNames[idx];
 
-		let group = (layerName != 'Top') ? Game.groundMapLayers : Game.highMapLayers;
+		let group = !layerName.startsWith('Top') ? Game.groundMapLayers : Game.highMapLayers;
 
 		Game.map.gameLayers[layerName] = Game.map.createLayer(layerName, 0, 0, group);
 		Game.map.gameLayers[layerName].resizeWorld();
+		if (frontier && layerName === 'Collision') Game.map.gameLayers[layerName].visible = false;
 	}
 
 	Game.map.gameLayers['Base'].inputEnabled = true;
@@ -327,7 +330,11 @@ Game.loadCurrentChunk = function(clear) {
 		game.cache.addTilemap(chunk.id, null, chunk.data, Phaser.Tilemap.TILED_JSON);
 
 		Game.map = game.add.tilemap(chunk.id, 16, 16);
-		Game.map.addTilesetImage('tileset', 'tileset', 16, 16);
+		if (chunk.data.tilesets.some(t => t.name === 'frontier')) {
+			Game.map.addTilesetImage('frontier', 'frontier', 16, 16);
+		} else {
+			Game.map.addTilesetImage('tileset', 'tileset', 16, 16);
+		}
 
 		game.world.setBounds(0, 0, Game.map.widthInPixels, Game.map.heightInPixels);
 

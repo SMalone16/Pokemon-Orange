@@ -1186,7 +1186,7 @@ Battle.battleOver = async function(packet) {
 			
 			let msg = "";
 			if (packet.winner_id == Game.player.id) {
-				msg = "Victory!";
+				msg = "Victory!" + (packet.xp_won > 0 ? " +" + packet.xp_won + " XP" : "");
 			} else {
 				msg = "Loss.";
 			}

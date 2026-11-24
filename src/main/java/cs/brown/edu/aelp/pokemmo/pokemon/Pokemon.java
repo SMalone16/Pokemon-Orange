@@ -411,7 +411,8 @@ public class Pokemon extends Identifiable implements SQLBatchSavable {
   }
 
   public void addExp(Integer experience) {
-    this.exp += experience;
+    if (experience == null || experience <= 0 || this.lvl >= 100) return;
+    this.exp = (int) Math.min((long) calcXpByLevel(100), (long) this.exp + experience);
     int oldLvl = this.lvl;
     this.lvl = calcLevel(this.exp);
     if (this.lvl > oldLvl){

@@ -131,7 +131,7 @@ public class PvPBattle extends Battle {
 
       if (turn.getTrainer().allPokemonKnockedOut()) {
         victory(other(turn.getTrainer()));
-        break;
+        return;
       }
     }
 
@@ -368,7 +368,8 @@ public class PvPBattle extends Battle {
     }
   }
 
-  public void victory(Trainer t) {
+  public synchronized void victory(Trainer t) {
+    if (getBattleState() == BattleState.DONE) return;
     System.out.println("Victory for: " + t.getId());
 
     this.setLastBattleUpdate(this.getPendingBattleUpdate());
@@ -382,10 +383,12 @@ public class PvPBattle extends Battle {
     winner.resetAllStatStages();
     loser.resetAllStatStages();
 
+    int before = winner.getTeam().stream().mapToInt(Pokemon::getExp).sum();
+    // No XP for a forfeit or disconnect; only a defeated team earns XP.
+    if (loser.allPokemonKnockedOut()) updateXp(winner, loser);
+    int xp = winner.getTeam().stream().mapToInt(Pokemon::getExp).sum() - before;
     PacketSender.sendEndBattlePacket(this.getId(), this.getWinner().getId(),
-        this.getLoser().getId(), 0, 0);
-
-    updateXp(winner, loser);
+        this.getLoser().getId(), 0, 0, xp);
 
     User w = (User) winner;
     User l = (User) loser;
@@ -542,7 +545,7 @@ public class PvPBattle extends Battle {
         }
         expWon *= 1.5;
       }
-      winnerP.addExp(expWon.intValue());
+      if (expWon > 0) winnerP.addExp(expWon.intValue());
     }
   }
 }
