@@ -48,3 +48,5 @@ New players spawn in the 96×96 BrowserQuest-derived Frontier. Existing saves re
 Wild knockouts and completed PvP victories grant experience to surviving team Pokémon using the existing level-based formula; captures, running, losing and forfeits do not grant XP. The victory screen shows total earned XP. Existing level and experience data are saved in PostgreSQL.
 
 After updating, test with two browser profiles: join, win a wild battle, verify XP, close/reopen, and recover using the same name and private recovery code. Test both Frontier portals and verify blocked terrain. A database backup before updating is recommended.
+
+The green outlined cells indicate encounter locations, and gold outlines mark portals. The smoke test now verifies an authenticated WebSocket initialization, player recovery, and invalid credential rejection. Browser rendering still requires a real browser playtest.

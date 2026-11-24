@@ -339,6 +339,20 @@ Game.loadCurrentChunk = function(clear) {
 		game.world.setBounds(0, 0, Game.map.widthInPixels, Game.map.heightInPixels);
 
 		self.drawLayers();
+		if (chunk.data.tilesets.some(t => t.name === 'frontier')) {
+			const marks = game.add.graphics(0, 0, Game.groundMapLayers);
+			const encounters = chunk.data.layers.find(l => l.name === 'Encounters');
+			marks.lineStyle(1, 0x9be65a, 0.7);
+			for (let i = 0; i < encounters.data.length; i++) {
+				if (encounters.data[i]) marks.drawRect((i % chunk.data.width)*16+4, Math.floor(i/chunk.data.width)*16+4, 8, 8);
+			}
+			marks.lineStyle(2, 0xfbbf24, 1);
+			marks.drawRect(17*16+1, 50*16+1, 14, 14);
+		} else if (requestedChunk === 'main_chunk') {
+			const marker = game.add.graphics(0,0,Game.groundMapLayers);
+			marker.lineStyle(2, 0xfbbf24, 1);
+			marker.drawRect(34*16+1, 27*16+1, 14, 14);
+		}
 
 		Game.collisionMatrix = self.calculateCollisionMatrix(Game.map);
 		Game.easystar = new EasyStar.js();
@@ -367,7 +381,7 @@ Game.drawHud = function() {
 	// hud grey bar
 	let completionSprite = game.add.graphics(0, 0);
 	completionSprite.beginFill(0x3d3d3d, 1);
-	completionSprite.drawRect(Game.map.widthInPixels/1.5, Game.map.heightInPixels-0.51*Game.map.heightInPixels, Game.map.widthInPixels, Game.map.heightInPixels/10.4);
+	completionSprite.drawRect(1024/1.5, 1024-0.51*1024, 1024, 1024/10.4);
 	completionSprite.boundsPadding = 0;
     completionSprite.fixedToCamera = true;
     completionSprite.inputEnabled = true;
@@ -375,43 +389,43 @@ Game.drawHud = function() {
     // hud white bar behind coins
     let whiteBar = game.add.graphics(0, 0);
   	whiteBar.beginFill(0xffffff, 1);
-  	whiteBar.drawRect(Game.map.widthInPixels*0.85, Game.map.heightInPixels-0.53*Game.map.heightInPixels, Game.map.widthInPixels*0.15, Game.map.heightInPixels*0.02);
+  	whiteBar.drawRect(1024*0.85, 1024-0.53*1024, 1024*0.15, 1024*0.02);
   	whiteBar.boundsPadding = 0;
     whiteBar.fixedToCamera = true;
     whiteBar.inputEnabled = true;
 
     // coin icon
-  let coinIcon = game.add.sprite(Game.map.widthInPixels*0.85 + 4, Game.map.heightInPixels-0.53*Game.map.heightInPixels + 4, 'coin');
+  let coinIcon = game.add.sprite(1024*0.85 + 4, 1024-0.53*1024 + 4, 'coin');
   //coinIcon.anchor.setTo(0.5, 0.5);
   coinIcon.inputEnabled = false;
   coinIcon.fixedToCamera = true;
 
-    let coinText = game.add.bitmapText(Game.map.widthInPixels*0.85 + 24, Game.map.heightInPixels-0.53*Game.map.heightInPixels + 5, 'nokia16black', 'x'+Game.player.currency, 7.5*2);
+    let coinText = game.add.bitmapText(1024*0.85 + 24, 1024-0.53*1024 + 5, 'nokia16black', 'x'+Game.player.currency, 7.5*2);
     coinText.inputEnabled = false;
     coinText.fixedToCamera = true;
     currencyTextObj = coinText;
 
     // team management icon
-    let teamIcon = game.add.sprite(Game.map.widthInPixels-Game.map.widthInPixels/4 - 35, Game.map.heightInPixels-Game.map.heightInPixels/2 + 35, 'pokedex');
+    let teamIcon = game.add.sprite(1024-1024/4 - 35, 1024-1024/2 + 35, 'pokedex');
     teamIcon.anchor.setTo(0.5, 0.5);
     teamIcon.inputEnabled = true;
     teamIcon.fixedToCamera = true;
     teamIcon.events.onInputDown.add(queueTeam, this);
 
     // backpack icon
-    let backpackIcon = game.add.sprite(Game.map.widthInPixels-Game.map.widthInPixels/3 + 100, Game.map.heightInPixels-Game.map.heightInPixels/2.032, "backpack");
+    let backpackIcon = game.add.sprite(1024-1024/3 + 100, 1024-1024/2.032, "backpack");
     backpackIcon.inputEnabled = true;
     backpackIcon.fixedToCamera = true;
     backpackIcon.events.onInputDown.add(queueBackpack, this);
 
 	// trophy icon
-	let trophyIcon = game.add.sprite(Game.map.widthInPixels-Game.map.widthInPixels/3 + 165, Game.map.heightInPixels-Game.map.heightInPixels/2.032, "trophy");
+	let trophyIcon = game.add.sprite(1024-1024/3 + 165, 1024-1024/2.032, "trophy");
     trophyIcon.inputEnabled = true;
     trophyIcon.fixedToCamera = true;
     trophyIcon.events.onInputDown.add(queueLeaderboard, this);
 
     // logout button
-	let logoutIcon = game.add.sprite(Game.map.widthInPixels-Game.map.widthInPixels/3 + 230, Game.map.heightInPixels-Game.map.heightInPixels/2.032 - 5, "logout");
+	let logoutIcon = game.add.sprite(1024-1024/3 + 230, 1024-1024/2.032 - 5, "logout");
     logoutIcon.inputEnabled = true;
     logoutIcon.fixedToCamera = true;
     logoutIcon.events.onInputDown.add(logout, this);
@@ -424,7 +438,7 @@ function drawLeadboard() {
 		return;
 	}
 	// leaderboard panel
-	Game.panel = new SlickUI.Element.Panel(Game.map.widthInPixels/1.5, Game.map.heightInPixels/4.15, Game.map.widthInPixels/2, Game.map.heightInPixels/4);
+	Game.panel = new SlickUI.Element.Panel(1024/1.5, 1024/4.15, 1024/2, 1024/4);
 	Game.slickUI.add(Game.panel);
 
 	let header = new SlickUI.Element.Text(Game.panel.width/2 - 100 , 20, "Leaderboard:");
@@ -446,7 +460,7 @@ function drawBackpack() {
 	}
 	// leaderboard panel
 
-	Game.panel = new SlickUI.Element.Panel(Game.map.widthInPixels/1.5, Game.map.heightInPixels/4.15, Game.map.widthInPixels/2, Game.map.heightInPixels/4);
+	Game.panel = new SlickUI.Element.Panel(1024/1.5, 1024/4.15, 1024/2, 1024/4);
 	Game.slickUI.add(Game.panel);
 
 	let header = new SlickUI.Element.Text(Game.panel.width/2 - 130 , 20, "Backpack:");
@@ -634,7 +648,7 @@ async function drawTeam() {
 		return;
 	}
 
-    Game.panel = new SlickUI.Element.Panel(Game.map.widthInPixels/1.5, 0, Game.map.widthInPixels/2, game.height - 98);
+    Game.panel = new SlickUI.Element.Panel(1024/1.5, 0, 1024/2, game.height - 98);
     Game.slickUI.add(Game.panel);
 
     Game.pokemonButtons = [];

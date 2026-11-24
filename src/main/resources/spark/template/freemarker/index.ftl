@@ -37,6 +37,7 @@
 	</head>
 	<body style='background-color: grey; overflow: hidden;'>
 		<div id="connection-status" hidden style="position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:100;background:#203040;color:white;padding:10px 16px;border-radius:8px;font:14px Arial"></div>
+		<div style="position:fixed;bottom:4px;left:8px;z-index:120;font:11px Arial;background:#fff9;padding:3px 6px">Frontier map: <a href="https://github.com/mozilla/BrowserQuest" target="_blank" rel="noopener">BrowserQuest / Little Workshop</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a> · green outlines: encounters; gold: portal</div>
 		<div id="main">
 		
 			<div style="margin-left: auto; visibility: hidden;"></div>

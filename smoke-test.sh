@@ -17,3 +17,5 @@ for asset in front-pidgey.png front-pidgey.json back-pidgey.png back-pidgey.json
 done
 echo "Smoke test passed: HTTP, assets, name-only join and name takeover rejection."
 echo "Disposable test account created: $name"
+
+python3 scripts/test-player-resume.py
