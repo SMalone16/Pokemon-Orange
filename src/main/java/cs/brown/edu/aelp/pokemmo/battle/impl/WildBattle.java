@@ -146,7 +146,7 @@ public class WildBattle extends Battle {
 
       if (turn.getTrainer().allPokemonKnockedOut()) {
         victory(other(turn.getTrainer()));
-        break;
+        return;
       }
     }
 
@@ -379,7 +379,9 @@ public class WildBattle extends Battle {
     }
   }
 
-  public void victory(Trainer t) {
+  public synchronized void victory(Trainer t) {
+    if (getBattleState() == BattleState.DONE) return;
+    setBattleState(BattleState.DONE);
     System.out.println("Victory for: " + t.getId());
 
     winner = t;
@@ -397,10 +399,14 @@ public class WildBattle extends Battle {
 
     this.setLastBattleUpdate(this.getPendingBattleUpdate());
     sendBattleUpdate();
+    int xp = 0;
+    if (winner instanceof User && wild.isKnockedOut()) {
+      int before = winner.getTeam().stream().mapToInt(Pokemon::getExp).sum();
+      updateXp(winner, loser);
+      xp = winner.getTeam().stream().mapToInt(Pokemon::getExp).sum() - before;
+    }
     PacketSender.sendEndBattlePacket(this.getId(), this.getWinner().getId(),
-        this.getLoser().getId(), 0, 0);
-
-    setBattleState(BattleState.DONE);
+        this.getLoser().getId(), 0, 0, xp);
 
     User u;
     if (winner instanceof User) {
@@ -534,7 +540,7 @@ public class WildBattle extends Battle {
           expWon += Pokemon.xpWon(winnerP, loserP);
         }
       }
-      winnerP.addExp(expWon.intValue());
+      if (expWon > 0) winnerP.addExp(expWon.intValue());
     }
   }
 }

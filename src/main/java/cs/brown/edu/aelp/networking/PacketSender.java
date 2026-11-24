@@ -142,6 +142,11 @@ public final class PacketSender {
 
   public static void sendEndBattlePacket(int battleId, int winnerId,
       int loserId, int winnerCurrencyWon, int loserCurrencyLost) {
+    sendEndBattlePacket(battleId, winnerId, loserId, winnerCurrencyWon, loserCurrencyLost, 0);
+  }
+
+  public static void sendEndBattlePacket(int battleId, int winnerId,
+      int loserId, int winnerCurrencyWon, int loserCurrencyLost, int xpWon) {
 
     JsonObject message = new JsonObject();
 
@@ -155,6 +160,7 @@ public final class PacketSender {
     payload.addProperty("battle_id", battleId);
     payload.addProperty("winner_currency_won", winnerCurrencyWon);
     payload.addProperty("loser_currency_lost", loserCurrencyLost);
+    payload.addProperty("xp_won", xpWon);
 
     // adding the payload to the message
     message.add("payload", payload);
