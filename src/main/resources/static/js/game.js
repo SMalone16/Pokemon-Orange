@@ -34,6 +34,7 @@ Game.init = function() {
 };
 
 Game.shutdown = function() {
+    OrangeUI.clear();
 	console.log('test!');
 	game.world.removeAll();
 

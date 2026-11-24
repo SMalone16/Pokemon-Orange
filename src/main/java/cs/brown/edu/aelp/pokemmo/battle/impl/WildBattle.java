@@ -40,6 +40,9 @@ public class WildBattle extends Battle {
 
   private final Pokemon wild;
   private final Trainer a;
+  private final String npcLabel;
+  private final java.util.function.Consumer<Boolean> npcResult;
+  public String getNpcLabel() { return npcLabel; }
 
   private Trainer winner;
 
@@ -49,7 +52,14 @@ public class WildBattle extends Battle {
   private Trainer b;
 
   public WildBattle(Integer id, Arena arena, User user, Pokemon wild) {
+    this(id,arena,user,wild,null,null);
+  }
+
+  public WildBattle(Integer id, Arena arena, User user, Pokemon wild,
+      String label, java.util.function.Consumer<Boolean> result) {
     super(id, arena);
+    this.npcLabel=label;
+    this.npcResult=result;
     this.wild = wild;
     this.a = user;
 
@@ -146,7 +156,7 @@ public class WildBattle extends Battle {
 
       if (turn.getTrainer().allPokemonKnockedOut()) {
         victory(other(turn.getTrainer()));
-        break;
+        return;
       }
     }
 
@@ -167,6 +177,10 @@ public class WildBattle extends Battle {
 
     User u = (User) turn.getTrainer();
     Item item = turn.getItem();
+    if (npcResult != null && item.isPokeball()) {
+      getPendingBattleUpdate().addSummary(new ItemSummary(item,false,wild,"Trainer Pokemon cannot be caught."));
+      return;
+    }
     item.removeFromInventory(u.getInventory());
 
     // TODO: Add messages
@@ -379,7 +393,8 @@ public class WildBattle extends Battle {
     }
   }
 
-  public void victory(Trainer t) {
+  public synchronized void victory(Trainer t) {
+    if (getBattleState().equals(BattleState.DONE)) return;
     System.out.println("Victory for: " + t.getId());
 
     winner = t;
@@ -400,19 +415,20 @@ public class WildBattle extends Battle {
     PacketSender.sendEndBattlePacket(this.getId(), this.getWinner().getId(),
         this.getLoser().getId(), 0, 0);
 
-    setBattleState(BattleState.DONE);
-
     User u;
     if (winner instanceof User) {
       u = (User) winner;
-      int won = new Random().nextInt(25) + 1;
+      if (wild.isKnockedOut()) updateXp(winner, loser);
+      int won = npcResult == null ? new Random().nextInt(25) + 1 : 0;
       u.setCurrency(u.getCurrency() + won);
-      u.sendMessage(String.format(
+      if (npcResult == null) u.sendMessage(String.format(
           "You earned %d coins for beating a wild Pokemon in a battle.", won));
     } else {
       u = (User) loser;
     }
 
+    if (npcResult != null) npcResult.accept(winner == a && wild.isKnockedOut());
+    setBattleState(BattleState.DONE);
     boolean needsHeal = true;
     for (Pokemon p : u.getTeam()) {
       if (p.getCurrHp() != 0) {

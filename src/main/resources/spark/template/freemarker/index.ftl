@@ -66,6 +66,7 @@
 		<script src="/js/sparseMap.js"></script>
 		<script src="/js/animation.js"></script>
 		<script src="/js/player.js"></script>
+		<script src="/js/orange.js"></script>
 		<script src="/js/net.js"></script>
 		<script src="/js/home.js"></script>
 		<script src="/js/main.js"></script>

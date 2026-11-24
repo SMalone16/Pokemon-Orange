@@ -40,3 +40,20 @@ The script downloads missing Gen I front/back sprites into git-ignored art-overr
 - Back up: `docker compose exec -T db pg_dump -U pokemon -d pokemon_orange > orange-backup.sql`. Store securely; do not commit. Do not delete .env or the volume. Rebuilds and Codespace deletion can destroy local Docker data.
 
 Original project: https://github.com/felixs-alt/Pokemon-Brown
+
+
+## Orange: shops, PvP and PokePolice (experimental)
+
+Click a nearby trainer to challenge them; they must accept. Challenges are enabled in all map areas. Three outdoor shopkeepers appear on the main map. Approach within three tiles to buy stock with coins, or challenge the keeper for their remaining inventory. Stock replenishes after two minutes. Trainer-owned opponents cannot be captured.
+
+Five Pokeball indicators show your wanted level. A successful robbery adds one level; more levels dispatch more officers and stronger Pokemon. Officers patrol, converge on the last known tile using the collision map, and challenge on contact. Their encounters are sequential, not simultaneous multi-Pokemon battles. Defeating a full squad raises the wanted level; defeat with no healthy Pokemon clears it and returns you to the PokeCenter. Breaking contact starts a search timer. Pursuit and shop stock are per trainer and in memory (not persisted across server restarts). Other players can continue exploring independently.
+
+Local artwork in `art-overrides/` is preferred automatically at build time, including for species with legacy art. To explicitly download art you are authorized to use, run `bash start.sh --download-authorized`; ordinary `bash start.sh` never downloads new third-party art. Existing game assets are used for recolored map NPCs.
+
+### Manual multiplayer checks
+
+1. Start two browser profiles, approach another trainer, accept/reject a challenge, and complete a battle.
+2. Approach all three shops; buy one item and verify coin/inventory changes. Win a keeper encounter and verify remaining stock transfers once.
+3. Confirm NPC Pokemon cannot be caught. Verify wanted level increases, multiple officers pursue, collisions are respected, and police encounters scale.
+4. Escape search, lose a police battle, and reconnect; confirm UI and state recover. Repeat with two players and ensure one player's heat does not affect the other.
+5. Build with supplied authorized artwork and verify front/back sprites in battle.

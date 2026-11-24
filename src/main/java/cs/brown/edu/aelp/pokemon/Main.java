@@ -204,6 +204,7 @@ public final class Main {
       @Override
       public void run() {
         try {
+          cs.brown.edu.aelp.pokemmo.map.OrangeWorld.tick();
           PacketSender.sendGamePackets();
         } catch (Exception e) {
           e.printStackTrace();

@@ -38,8 +38,8 @@ public class BattleManager {
     return RandomWildPokemon.generateWildPokemon(avgLvl);
   }
 
-  public WildBattle createWildBattle(User u) {
-    if (u.isInBattle()) {
+  public synchronized WildBattle createWildBattle(User u) {
+    if (u.isBusy() || u.allPokemonKnockedOut()) {
       return null;
     }
     int id = getNewId();
@@ -51,7 +51,16 @@ public class BattleManager {
     return battle;
   }
 
-  public PvPBattle createPvPBattle(User u1, User u2) {
+  public synchronized WildBattle createNpcBattle(User u, Pokemon foe, String label,
+      java.util.function.Consumer<Boolean> result) {
+    if (u.isBusy() || u.allPokemonKnockedOut()) return null;
+    int id=getNewId();
+    WildBattle battle=new WildBattle(id,new Arena(),u,foe,label,result);
+    battleMap.put(id,battle);
+    return battle;
+  }
+
+  public synchronized PvPBattle createPvPBattle(User u1, User u2) {
     if (u1.isInBattle() || u2.isInBattle()) {
       return null;
     }

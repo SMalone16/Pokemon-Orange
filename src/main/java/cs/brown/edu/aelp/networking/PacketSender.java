@@ -114,6 +114,7 @@ public final class PacketSender {
     // WildBattle b = BattleManager.getInstance().createWildBattle(u);
     JsonObject packet = buildStartBattlePacket(b, b.getUser(),
         b.getWildPokemon(), false, "bg-meadow");
+    if (b.getNpcLabel() != null) packet.getAsJsonObject("payload").addProperty("npc_label", b.getNpcLabel());
     sendPacket(b.getUser(), packet);
     queueOpForChunk(buildPlayerOpMessage(b.getUser(), OP_CODES.ENTERED_BATTLE),
         b.getUser().getLocation().getChunk());

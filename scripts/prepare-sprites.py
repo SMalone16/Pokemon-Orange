@@ -84,8 +84,9 @@ def main():
         if not 1 <= info["num"] <= 151: continue
         for facing in ("front","back"):
             key=f"{facing}-{species}"
-            if (ORIGINAL/(key+".png")).is_file() and (ORIGINAL/(key+".json")).is_file(): continue
             override=OVERRIDES/(key+".png")
+            # Prefer supplied authorized artwork, even for existing species.
+            if not override.exists() and (ORIGINAL/(key+".png")).is_file() and (ORIGINAL/(key+".json")).is_file(): continue
             if args.download_authorized and not override.exists():
                 url=URL+("back/" if facing=="back" else "")+str(info["num"])+".png"
                 try:

@@ -17,7 +17,8 @@ const MESSAGE_TYPE = {
     UPDATE_TEAM: 15,
     OPEN_POKE_CONSOLE: 16,
     PURCHASE_ORDER: 17,
-	HEARTBEAT: 18
+	HEARTBEAT: 18,
+    ORANGE_SHOP: 19
 };
 
 const BATTLE_ACTION = {
@@ -371,6 +372,7 @@ class Net {
                 Game.player.currency = msg.payload.users[i].currency;
                 Game.player.activePokemon = msg.payload.users[i].active_pokemon;
 				Game.player.elo = msg.payload.users[i].elo;
+                OrangeUI.sync(update.orange, loc);
         if (currencyTextObj != null) {
           currencyTextObj.text = 'x' + Game.player.currency;
         }
@@ -480,6 +482,9 @@ class Net {
 			Game.player.setPos(loc.col, loc.row);
 		}
 
+        if (typeof clearChallengeUI === 'function') clearChallengeUI();
+        OrangeUI.hide();
+        if (payload.npc_label) OrangeUI.announce(payload.npc_label + ' challenges you!');
 		Battle.setup(payload);
 		Battle.run();
 		//game.state.start('Battle');
@@ -567,7 +572,7 @@ class Net {
   		} else if (payload.reason == "expired") {
   			renderChallengeUpdate("Challenge expired.");
   		} else {
-  			renderChallengeUpdate("Challenging disabled.");
+  			renderChallengeUpdate(payload.reason === 'too far away' ? 'Move closer.' : 'Challenging disabled.');
   		}
   	}
 
@@ -579,7 +584,9 @@ class Net {
   		if (Game.players[challengerId] != undefined) {
   			let player = Game.players[challengerId];
   			renderChallenge(player);
-  		}
+  		} else {
+            net.rejectChallenge(Game.player.id);
+        }
   	}
 
   	requestChallenge(id, challengedId) {

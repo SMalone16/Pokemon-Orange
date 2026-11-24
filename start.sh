@@ -11,6 +11,10 @@ if [[ ! -e .env ]]; then
   printf 'DB_PASSWORD=%s\nCLASS_CODE=%s\nENABLE_CHAT=false\n' "$db_password" "$class_code" > .env
 fi
 chmod 600 .env
+# Local authorized art is automatically included by the Docker sprite builder.
+if [[ "${1:-}" == "--download-authorized" ]]; then
+  python3 scripts/prepare-sprites.py --download-authorized
+fi
 # Compose must use the saved credentials rather than a stale shell variable.
 unset DB_PASSWORD CLASS_CODE ENABLE_CHAT
 if ! docker compose up -d --build --wait --wait-timeout 180; then

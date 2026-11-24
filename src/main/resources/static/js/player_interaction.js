@@ -178,3 +178,10 @@ function cancelChallengeUI(player) {
 	panelMessage = null;
   destroyAllOverhead(player);
 }
+
+// A battle start consumes the challenge; never leave the player frozen afterwards.
+function clearChallengeUI() {
+  if (panelMessage) { panelMessage.destroy(); panelMessage = null; }
+  try { destroyAllOverhead(clicked_player); } catch (err) { console.warn(err); }
+  clicked_player = null; battler = null; pending = false; Game.playerFrozen = false;
+}

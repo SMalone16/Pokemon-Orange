@@ -32,7 +32,7 @@ public abstract class Battle extends Identifiable {
 
   private BattleUpdate pendingBattleUpdate = new BattleUpdate();
 
-  private BattleState battleState = BattleState.SETUP;
+  private volatile BattleState battleState = BattleState.SETUP;
 
   public abstract Trainer getLoser();
 
@@ -41,7 +41,7 @@ public abstract class Battle extends Identifiable {
   /**
    * @return the battleState
    */
-  public synchronized BattleState getBattleState() {
+  public BattleState getBattleState() {
     return battleState;
   }
 
