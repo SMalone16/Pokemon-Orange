@@ -73,7 +73,7 @@ class Player {
 	 	this.sprite.visible = false;
 
 	 	/* Add all animations to the sprie. */
-	 	for(name in this.animations) {
+	 	for(let name in this.animations) {
 	 		this.sprite.animations.add(name, this.animations[name]);
 	 	}
 
@@ -241,8 +241,8 @@ class Player {
 	 * dir 		- 'left', 'right', 'up', or 'down'.
 	 */
 	 step(dir) {
-	 	return;
-	 	if (debounce(this, 'lastStep', 50)) {
+	 	if (!net.connected || !this.sprite || !Game.collisionMatrix) return;
+	 	if (debounce(this, 'lastStep', 260)) {
 	 		return;
 	 	}
 
@@ -306,7 +306,7 @@ class Player {
 		//console.log(dir);
 
 		/* Tween duration */
-		let duration = .2;
+		let duration = .24;
 
 		/* Create a new tween */
 		let tween = game.add.tween(this.sprite);
@@ -375,7 +375,7 @@ class Player {
 				return;
 			}
 
-			if (path.length == 0) {
+			if (path.length < 2) {
 				return;
 			}
 			

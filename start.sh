@@ -25,6 +25,6 @@ if ! curl -fsS --max-time 10 http://127.0.0.1:4567/health | grep -qx ok; then
   exit 1
 fi
 echo "Pokemon Orange is ready. Open port 4567 in the Codespaces Ports tab."
-echo "Registration class code: $(sed -n 's/^CLASS_CODE=//p' .env)"
-echo "Share only the game URL and class code, not the .env file."
+echo "Share the game URL only. Students choose an unused nickname."
+echo "For supervised hosting, use: docker compose logs -f game"
 echo "Stop with: docker compose down"

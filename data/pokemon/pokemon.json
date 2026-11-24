@@ -1,212 +1,2158 @@
 {
-    "bulbasaur": {
-        "num": 1,
-        "species": "Bulbasaur",
-        "types": ["Grass", "Poison"],
-        "baseStats": {"hp": 45, "atk": 49, "def": 49, "spa": 65, "spd": 65, "spe": 45},
-        "moves": [22, 33, 45, 273],
-        "evo": "ivysaur",
-        "expOnDefeat": 64,
-        "catchRate": 45,
-        "evolveAt": 16,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
+  "bulbasaur": {
+    "num": 1,
+    "species": "Bulbasaur",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 45,
+      "atk": 49,
+      "def": 49,
+      "spa": 65,
+      "spd": 65,
+      "spe": 45
     },
-    "ivysaur": {
-        "num": 2,
-        "species": "Ivysaur",
-        "types": ["Grass", "Poison"],
-        "baseStats": {"hp": 60, "atk": 62, "def": 63, "spa": 80, "spd": 80, "spe": 60},
-        "moves": [22, 33, 36, 77],
-        "evo": "venusaur",
-        "expOnDefeat": 142,
-        "catchRate": 45,
-        "evolveAt": 32,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
+    "moves": [
+      22,
+      33,
+      45,
+      273
+    ],
+    "evo": "ivysaur",
+    "expOnDefeat": 64,
+    "catchRate": 45,
+    "evolveAt": 16,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "ivysaur": {
+    "num": 2,
+    "species": "Ivysaur",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 60,
+      "atk": 62,
+      "def": 63,
+      "spa": 80,
+      "spd": 80,
+      "spe": 60
     },
-    "venusaur": {
-		"num": 3,
-		"species": "Venusaur",
-		"types": ["Grass", "Poison"],
-        "baseStats": {"hp": 80, "atk": 82, "def": 83, "spa": 100, "spd": 100, "spe": 80},
-        "moves": [33, 38, 77, 572],
-        "evo": "",
-        "expOnDefeat": 236,
-        "catchRate": 45,
-        "evolveAt": -1,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
+    "moves": [
+      22,
+      33,
+      36,
+      77
+    ],
+    "evo": "venusaur",
+    "expOnDefeat": 142,
+    "catchRate": 45,
+    "evolveAt": 32,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "venusaur": {
+    "num": 3,
+    "species": "Venusaur",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 80,
+      "atk": 82,
+      "def": 83,
+      "spa": 100,
+      "spd": 100,
+      "spe": 80
     },
-    "charmander": {
-		"num": 4,
-		"species": "Charmander",
-		"types": ["Fire"],
-        "baseStats": {"hp": 39, "atk": 52, "def": 43, "spa": 60, "spd": 50, "spe": 65},
-        "moves": [10, 45, 52],
-        "evo": "charmeleon",
-        "expOnDefeat": 62,
-        "catchRate": 45,
-        "evolveAt": 16,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
-	},
-	"charmeleon": {
-		"num": 5,
-		"species": "Charmeleon",
-		"types": ["Fire"],
-        "baseStats": {"hp": 58, "atk": 64, "def": 58, "spa": 80, "spd": 65, "spe": 80},
-        "moves": [10, 52, 163, 481],
-        "evo": "charizard",
-        "expOnDefeat": 142,
-        "catchRate": 45,
-        "evolveAt": 36,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
-	},
-	"charizard": {
-		"num": 6,
-		"species": "Charizard",
-		"types": ["Fire", "Flying"],
-        "baseStats": {"hp": 78, "atk": 84, "def": 78, "spa": 109, "spd": 85, "spe": 100},
-        "moves": [53, 337, 394, 517],
-        "evo": "",
-        "expOnDefeat": 240,
-        "catchRate": 45,
-        "evolveAt": -1,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
+    "moves": [
+      33,
+      38,
+      77,
+      572
+    ],
+    "evo": "",
+    "expOnDefeat": 236,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "charmander": {
+    "num": 4,
+    "species": "Charmander",
+    "types": [
+      "Fire"
+    ],
+    "baseStats": {
+      "hp": 39,
+      "atk": 52,
+      "def": 43,
+      "spa": 60,
+      "spd": 50,
+      "spe": 65
     },
-    "squirtle": {
-		"num": 7,
-		"species": "Squirtle",
-		"types": ["Water"],
-        "baseStats": {"hp": 44, "atk": 48, "def": 65, "spa": 50, "spd": 64, "spe": 43},
-        "moves": [33, 39, 55],
-        "evo": "wartortle",
-        "expOnDefeat": 63,
-        "catchRate": 45,
-        "evolveAt": 16,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
-	},
-	"wartortle": {
-		"num": 8,
-		"species": "Wartortle",
-		"types": ["Water"],
-        "baseStats": {"hp": 59, "atk": 63, "def": 80, "spa": 65, "spd": 80, "spe": 58},
-        "moves": [33, 44, 55, 401],
-        "evo": "blastoise",
-        "expOnDefeat": 142,
-        "catchRate": 45,
-        "evolveAt": 36,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
-	},
-	"blastoise": {
-		"num": 9,
-		"species": "Blastoise",
-		"types": ["Water"],
-        "baseStats": {"hp": 79, "atk": 83, "def": 100, "spa": 85, "spd": 105, "spe": 78},
-        "moves": [44, 56, 401, 430],
-        "evo": "",
-        "expOnDefeat": 239,
-        "catchRate": 45,
-        "evolveAt": -1,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
-	},
-    "pichu": {
-		"num": 172,
-		"species": "Pichu",
-		"types": ["Electric"],
-        "baseStats": {"hp": 20, "atk": 40, "def": 15, "spa": 35, "spd": 35, "spe": 60},
-        "moves": [39, 84],
-        "evo": "pikachu",
-        "expOnDefeat": 41,
-        "catchRate": 190,
-        "evolveAt": 12,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
-	},
-    "pikachu": {
-		"num": 25,
-		"species": "Pikachu",
-		"types": ["Electric"],
-        "baseStats": {"hp": 35, "atk": 55, "def": 40, "spa": 50, "spd": 50, "spe": 90},
-        "moves": [21, 84, 98, 435],
-        "evo": "raichu",
-        "expOnDefeat": 112,
-        "catchRate": 190,
-        "evolveAt": 35,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
+    "moves": [
+      10,
+      45,
+      52
+    ],
+    "evo": "charmeleon",
+    "expOnDefeat": 62,
+    "catchRate": 45,
+    "evolveAt": 16,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "charmeleon": {
+    "num": 5,
+    "species": "Charmeleon",
+    "types": [
+      "Fire"
+    ],
+    "baseStats": {
+      "hp": 58,
+      "atk": 64,
+      "def": 58,
+      "spa": 80,
+      "spd": 65,
+      "spe": 80
     },
-    "raichu": {
-		"num": 26,
-		"species": "Raichu",
-		"types": ["Electric"],
-        "baseStats": {"hp": 60, "atk": 90, "def": 55, "spa": 90, "spd": 80, "spe": 110},
-        "moves": [85, 98, 411, 528],
-        "evo": "",
-        "expOnDefeat": 218,
-        "catchRate": 75,
-        "evolveAt": -1,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
+    "moves": [
+      10,
+      52,
+      163,
+      481
+    ],
+    "evo": "charizard",
+    "expOnDefeat": 142,
+    "catchRate": 45,
+    "evolveAt": 36,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "charizard": {
+    "num": 6,
+    "species": "Charizard",
+    "types": [
+      "Fire",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 78,
+      "atk": 84,
+      "def": 78,
+      "spa": 109,
+      "spd": 85,
+      "spe": 100
     },
-    "arceus": {
-		"num": 493,
-		"species": "Arceus",
-		"types": ["Normal"],
-        "baseStats": {"hp": 120, "atk": 120, "def": 120, "spa": 120, "spd": 120, "spe": 120},
-        "moves": [245, 304, 434, 449],
-        "evo": "",
-        "expOnDefeat": 324,
-        "catchRate": 3,
-        "evolveAt": -1,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
+    "moves": [
+      53,
+      337,
+      394,
+      517
+    ],
+    "evo": "",
+    "expOnDefeat": 240,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "squirtle": {
+    "num": 7,
+    "species": "Squirtle",
+    "types": [
+      "Water"
+    ],
+    "baseStats": {
+      "hp": 44,
+      "atk": 48,
+      "def": 65,
+      "spa": 50,
+      "spd": 64,
+      "spe": 43
     },
-    "giratina": {
-		"num": 487,
-		"species": "Giratina",
-		"types": ["Ghost", "Dragon"],
-		"baseStats": {"hp": 150, "atk": 120, "def": 100, "spa": 120, "spd": 100, "spe": 90},
-		"moves": [211, 337, 412, 421],
-        "evo": "",
-        "expOnDefeat": 306,
-        "catchRate": 3,
-        "evolveAt": -1,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
+    "moves": [
+      33,
+      39,
+      55
+    ],
+    "evo": "wartortle",
+    "expOnDefeat": 63,
+    "catchRate": 45,
+    "evolveAt": 16,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "wartortle": {
+    "num": 8,
+    "species": "Wartortle",
+    "types": [
+      "Water"
+    ],
+    "baseStats": {
+      "hp": 59,
+      "atk": 63,
+      "def": 80,
+      "spa": 65,
+      "spd": 80,
+      "spe": 58
     },
-    "groudon": {
-		"num": 383,
-		"species": "Groudon",
-		"types": ["Ground"],
-		"baseStats": {"hp": 100, "atk": 150, "def": 140, "spa": 100, "spd": 90, "spe": 90},
-        "moves": [90, 126, 359, 619],
-        "evo": "",
-        "expOnDefeat": 302,
-        "catchRate": 3,
-        "evolveAt": -1,
-        "xOffset": 0,
-        "yOffset": 0,
-        "fps": 40
-	}
+    "moves": [
+      33,
+      44,
+      55,
+      401
+    ],
+    "evo": "blastoise",
+    "expOnDefeat": 142,
+    "catchRate": 45,
+    "evolveAt": 36,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "blastoise": {
+    "num": 9,
+    "species": "Blastoise",
+    "types": [
+      "Water"
+    ],
+    "baseStats": {
+      "hp": 79,
+      "atk": 83,
+      "def": 100,
+      "spa": 85,
+      "spd": 105,
+      "spe": 78
+    },
+    "moves": [
+      44,
+      56,
+      401,
+      430
+    ],
+    "evo": "",
+    "expOnDefeat": 239,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "pichu": {
+    "num": 172,
+    "species": "Pichu",
+    "types": [
+      "Electric"
+    ],
+    "baseStats": {
+      "hp": 20,
+      "atk": 40,
+      "def": 15,
+      "spa": 35,
+      "spd": 35,
+      "spe": 60
+    },
+    "moves": [
+      39,
+      84
+    ],
+    "evo": "pikachu",
+    "expOnDefeat": 41,
+    "catchRate": 190,
+    "evolveAt": 12,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "pikachu": {
+    "num": 25,
+    "species": "Pikachu",
+    "types": [
+      "Electric"
+    ],
+    "baseStats": {
+      "hp": 35,
+      "atk": 55,
+      "def": 40,
+      "spa": 50,
+      "spd": 50,
+      "spe": 90
+    },
+    "moves": [
+      21,
+      84,
+      98,
+      435
+    ],
+    "evo": "raichu",
+    "expOnDefeat": 112,
+    "catchRate": 190,
+    "evolveAt": 35,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "raichu": {
+    "num": 26,
+    "species": "Raichu",
+    "types": [
+      "Electric"
+    ],
+    "baseStats": {
+      "hp": 60,
+      "atk": 90,
+      "def": 55,
+      "spa": 90,
+      "spd": 80,
+      "spe": 110
+    },
+    "moves": [
+      85,
+      98,
+      411,
+      528
+    ],
+    "evo": "",
+    "expOnDefeat": 218,
+    "catchRate": 75,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "arceus": {
+    "num": 493,
+    "species": "Arceus",
+    "types": [
+      "Normal"
+    ],
+    "baseStats": {
+      "hp": 120,
+      "atk": 120,
+      "def": 120,
+      "spa": 120,
+      "spd": 120,
+      "spe": 120
+    },
+    "moves": [
+      245,
+      304,
+      434,
+      449
+    ],
+    "evo": "",
+    "expOnDefeat": 324,
+    "catchRate": 3,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "giratina": {
+    "num": 487,
+    "species": "Giratina",
+    "types": [
+      "Ghost",
+      "Dragon"
+    ],
+    "baseStats": {
+      "hp": 150,
+      "atk": 120,
+      "def": 100,
+      "spa": 120,
+      "spd": 100,
+      "spe": 90
+    },
+    "moves": [
+      211,
+      337,
+      412,
+      421
+    ],
+    "evo": "",
+    "expOnDefeat": 306,
+    "catchRate": 3,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "groudon": {
+    "num": 383,
+    "species": "Groudon",
+    "types": [
+      "Ground"
+    ],
+    "baseStats": {
+      "hp": 100,
+      "atk": 150,
+      "def": 140,
+      "spa": 100,
+      "spd": 90,
+      "spe": 90
+    },
+    "moves": [
+      90,
+      126,
+      359,
+      619
+    ],
+    "evo": "",
+    "expOnDefeat": 302,
+    "catchRate": 3,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 40
+  },
+  "caterpie": {
+    "num": 10,
+    "species": "Caterpie",
+    "types": [
+      "Bug"
+    ],
+    "baseStats": {
+      "hp": 45,
+      "atk": 30,
+      "def": 35,
+      "spa": 20,
+      "spd": 20,
+      "spe": 45
+    },
+    "moves": [
+      33
+    ],
+    "evo": "metapod",
+    "expOnDefeat": 39,
+    "catchRate": 255,
+    "evolveAt": 7,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "metapod": {
+    "num": 11,
+    "species": "Metapod",
+    "types": [
+      "Bug"
+    ],
+    "baseStats": {
+      "hp": 50,
+      "atk": 20,
+      "def": 55,
+      "spa": 25,
+      "spd": 25,
+      "spe": 30
+    },
+    "moves": [
+      33
+    ],
+    "evo": "butterfree",
+    "expOnDefeat": 72,
+    "catchRate": 120,
+    "evolveAt": 10,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "butterfree": {
+    "num": 12,
+    "species": "Butterfree",
+    "types": [
+      "Bug",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 60,
+      "atk": 45,
+      "def": 50,
+      "spa": 90,
+      "spd": 80,
+      "spe": 70
+    },
+    "moves": [
+      33,
+      77,
+      98
+    ],
+    "evo": "",
+    "expOnDefeat": 178,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "weedle": {
+    "num": 13,
+    "species": "Weedle",
+    "types": [
+      "Bug",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 40,
+      "atk": 35,
+      "def": 30,
+      "spa": 20,
+      "spd": 20,
+      "spe": 50
+    },
+    "moves": [
+      33,
+      77
+    ],
+    "evo": "kakuna",
+    "expOnDefeat": 39,
+    "catchRate": 255,
+    "evolveAt": 7,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "kakuna": {
+    "num": 14,
+    "species": "Kakuna",
+    "types": [
+      "Bug",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 45,
+      "atk": 25,
+      "def": 50,
+      "spa": 25,
+      "spd": 25,
+      "spe": 35
+    },
+    "moves": [
+      33
+    ],
+    "evo": "beedrill",
+    "expOnDefeat": 72,
+    "catchRate": 120,
+    "evolveAt": 10,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "beedrill": {
+    "num": 15,
+    "species": "Beedrill",
+    "types": [
+      "Bug",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 65,
+      "atk": 90,
+      "def": 40,
+      "spa": 45,
+      "spd": 80,
+      "spe": 75
+    },
+    "moves": [
+      33,
+      77,
+      163
+    ],
+    "evo": "",
+    "expOnDefeat": 178,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "pidgey": {
+    "num": 16,
+    "species": "Pidgey",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 40,
+      "atk": 45,
+      "def": 40,
+      "spa": 35,
+      "spd": 35,
+      "spe": 56
+    },
+    "moves": [
+      33,
+      98
+    ],
+    "evo": "pidgeotto",
+    "expOnDefeat": 50,
+    "catchRate": 255,
+    "evolveAt": 18,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "pidgeotto": {
+    "num": 17,
+    "species": "Pidgeotto",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 63,
+      "atk": 60,
+      "def": 55,
+      "spa": 50,
+      "spd": 50,
+      "spe": 71
+    },
+    "moves": [
+      33,
+      98,
+      211
+    ],
+    "evo": "pidgeot",
+    "expOnDefeat": 122,
+    "catchRate": 120,
+    "evolveAt": 36,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "pidgeot": {
+    "num": 18,
+    "species": "Pidgeot",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 83,
+      "atk": 80,
+      "def": 75,
+      "spa": 70,
+      "spd": 70,
+      "spe": 101
+    },
+    "moves": [
+      98,
+      211,
+      304
+    ],
+    "evo": "",
+    "expOnDefeat": 216,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "rattata": {
+    "num": 19,
+    "species": "Rattata",
+    "types": [
+      "Normal"
+    ],
+    "baseStats": {
+      "hp": 30,
+      "atk": 56,
+      "def": 35,
+      "spa": 25,
+      "spd": 35,
+      "spe": 72
+    },
+    "moves": [
+      33,
+      98,
+      44
+    ],
+    "evo": "raticate",
+    "expOnDefeat": 51,
+    "catchRate": 255,
+    "evolveAt": 20,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "raticate": {
+    "num": 20,
+    "species": "Raticate",
+    "types": [
+      "Normal"
+    ],
+    "baseStats": {
+      "hp": 55,
+      "atk": 81,
+      "def": 60,
+      "spa": 50,
+      "spd": 70,
+      "spe": 97
+    },
+    "moves": [
+      98,
+      44,
+      36
+    ],
+    "evo": "",
+    "expOnDefeat": 145,
+    "catchRate": 127,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "spearow": {
+    "num": 21,
+    "species": "Spearow",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 40,
+      "atk": 60,
+      "def": 30,
+      "spa": 31,
+      "spd": 31,
+      "spe": 70
+    },
+    "moves": [
+      33,
+      45,
+      98
+    ],
+    "evo": "fearow",
+    "expOnDefeat": 52,
+    "catchRate": 255,
+    "evolveAt": 20,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "fearow": {
+    "num": 22,
+    "species": "Fearow",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 65,
+      "atk": 90,
+      "def": 65,
+      "spa": 61,
+      "spd": 61,
+      "spe": 100
+    },
+    "moves": [
+      98,
+      163,
+      211
+    ],
+    "evo": "",
+    "expOnDefeat": 155,
+    "catchRate": 90,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "ekans": {
+    "num": 23,
+    "species": "Ekans",
+    "types": [
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 35,
+      "atk": 60,
+      "def": 44,
+      "spa": 40,
+      "spd": 54,
+      "spe": 55
+    },
+    "moves": [
+      33,
+      44,
+      77
+    ],
+    "evo": "arbok",
+    "expOnDefeat": 58,
+    "catchRate": 255,
+    "evolveAt": 22,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "arbok": {
+    "num": 24,
+    "species": "Arbok",
+    "types": [
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 60,
+      "atk": 95,
+      "def": 69,
+      "spa": 65,
+      "spd": 79,
+      "spe": 80
+    },
+    "moves": [
+      44,
+      77,
+      21
+    ],
+    "evo": "",
+    "expOnDefeat": 157,
+    "catchRate": 90,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "sandshrew": {
+    "num": 27,
+    "species": "Sandshrew",
+    "types": [
+      "Ground"
+    ],
+    "baseStats": {
+      "hp": 50,
+      "atk": 75,
+      "def": 85,
+      "spa": 20,
+      "spd": 30,
+      "spe": 40
+    },
+    "moves": [
+      10,
+      33,
+      163
+    ],
+    "evo": "sandslash",
+    "expOnDefeat": 60,
+    "catchRate": 255,
+    "evolveAt": 22,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "sandslash": {
+    "num": 28,
+    "species": "Sandslash",
+    "types": [
+      "Ground"
+    ],
+    "baseStats": {
+      "hp": 75,
+      "atk": 100,
+      "def": 110,
+      "spa": 45,
+      "spd": 55,
+      "spe": 65
+    },
+    "moves": [
+      10,
+      163,
+      36
+    ],
+    "evo": "",
+    "expOnDefeat": 158,
+    "catchRate": 90,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "nidoranf": {
+    "num": 29,
+    "species": "Nidoran F",
+    "types": [
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 55,
+      "atk": 47,
+      "def": 52,
+      "spa": 40,
+      "spd": 40,
+      "spe": 41
+    },
+    "moves": [
+      33,
+      44,
+      45
+    ],
+    "evo": "nidorina",
+    "expOnDefeat": 55,
+    "catchRate": 235,
+    "evolveAt": 16,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "nidorina": {
+    "num": 30,
+    "species": "Nidorina",
+    "types": [
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 70,
+      "atk": 62,
+      "def": 67,
+      "spa": 55,
+      "spd": 55,
+      "spe": 56
+    },
+    "moves": [
+      33,
+      44,
+      77
+    ],
+    "evo": "",
+    "expOnDefeat": 128,
+    "catchRate": 120,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "nidoranm": {
+    "num": 32,
+    "species": "Nidoran M",
+    "types": [
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 46,
+      "atk": 57,
+      "def": 40,
+      "spa": 40,
+      "spd": 40,
+      "spe": 50
+    },
+    "moves": [
+      33,
+      44,
+      45
+    ],
+    "evo": "nidorino",
+    "expOnDefeat": 55,
+    "catchRate": 235,
+    "evolveAt": 16,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "nidorino": {
+    "num": 33,
+    "species": "Nidorino",
+    "types": [
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 61,
+      "atk": 72,
+      "def": 57,
+      "spa": 55,
+      "spd": 55,
+      "spe": 65
+    },
+    "moves": [
+      33,
+      44,
+      77
+    ],
+    "evo": "",
+    "expOnDefeat": 128,
+    "catchRate": 120,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "vulpix": {
+    "num": 37,
+    "species": "Vulpix",
+    "types": [
+      "Fire"
+    ],
+    "baseStats": {
+      "hp": 38,
+      "atk": 41,
+      "def": 40,
+      "spa": 50,
+      "spd": 65,
+      "spe": 65
+    },
+    "moves": [
+      52,
+      98,
+      39
+    ],
+    "evo": "",
+    "expOnDefeat": 60,
+    "catchRate": 190,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "ninetales": {
+    "num": 38,
+    "species": "Ninetales",
+    "types": [
+      "Fire"
+    ],
+    "baseStats": {
+      "hp": 73,
+      "atk": 76,
+      "def": 75,
+      "spa": 81,
+      "spd": 100,
+      "spe": 100
+    },
+    "moves": [
+      52,
+      53,
+      98
+    ],
+    "evo": "",
+    "expOnDefeat": 177,
+    "catchRate": 75,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "jigglypuff": {
+    "num": 39,
+    "species": "Jigglypuff",
+    "types": [
+      "Normal"
+    ],
+    "baseStats": {
+      "hp": 115,
+      "atk": 45,
+      "def": 20,
+      "spa": 45,
+      "spd": 25,
+      "spe": 20
+    },
+    "moves": [
+      33,
+      45,
+      304
+    ],
+    "evo": "",
+    "expOnDefeat": 95,
+    "catchRate": 170,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "zubat": {
+    "num": 41,
+    "species": "Zubat",
+    "types": [
+      "Poison",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 40,
+      "atk": 45,
+      "def": 35,
+      "spa": 30,
+      "spd": 40,
+      "spe": 55
+    },
+    "moves": [
+      33,
+      44
+    ],
+    "evo": "golbat",
+    "expOnDefeat": 49,
+    "catchRate": 255,
+    "evolveAt": 22,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "golbat": {
+    "num": 42,
+    "species": "Golbat",
+    "types": [
+      "Poison",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 75,
+      "atk": 80,
+      "def": 70,
+      "spa": 65,
+      "spd": 75,
+      "spe": 90
+    },
+    "moves": [
+      44,
+      98,
+      211
+    ],
+    "evo": "",
+    "expOnDefeat": 159,
+    "catchRate": 90,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "oddish": {
+    "num": 43,
+    "species": "Oddish",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 45,
+      "atk": 50,
+      "def": 55,
+      "spa": 75,
+      "spd": 65,
+      "spe": 30
+    },
+    "moves": [
+      33,
+      77,
+      22
+    ],
+    "evo": "gloom",
+    "expOnDefeat": 64,
+    "catchRate": 255,
+    "evolveAt": 21,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "gloom": {
+    "num": 44,
+    "species": "Gloom",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 60,
+      "atk": 65,
+      "def": 70,
+      "spa": 85,
+      "spd": 75,
+      "spe": 40
+    },
+    "moves": [
+      22,
+      77,
+      412
+    ],
+    "evo": "",
+    "expOnDefeat": 138,
+    "catchRate": 120,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "vileplume": {
+    "num": 45,
+    "species": "Vileplume",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 75,
+      "atk": 80,
+      "def": 85,
+      "spa": 110,
+      "spd": 90,
+      "spe": 50
+    },
+    "moves": [
+      22,
+      77,
+      572
+    ],
+    "evo": "",
+    "expOnDefeat": 221,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "diglett": {
+    "num": 50,
+    "species": "Diglett",
+    "types": [
+      "Ground"
+    ],
+    "baseStats": {
+      "hp": 10,
+      "atk": 55,
+      "def": 25,
+      "spa": 35,
+      "spd": 45,
+      "spe": 95
+    },
+    "moves": [
+      10,
+      33
+    ],
+    "evo": "dugtrio",
+    "expOnDefeat": 53,
+    "catchRate": 255,
+    "evolveAt": 26,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "dugtrio": {
+    "num": 51,
+    "species": "Dugtrio",
+    "types": [
+      "Ground"
+    ],
+    "baseStats": {
+      "hp": 35,
+      "atk": 100,
+      "def": 50,
+      "spa": 50,
+      "spd": 70,
+      "spe": 120
+    },
+    "moves": [
+      10,
+      163,
+      36
+    ],
+    "evo": "",
+    "expOnDefeat": 149,
+    "catchRate": 50,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "psyduck": {
+    "num": 54,
+    "species": "Psyduck",
+    "types": [
+      "Water"
+    ],
+    "baseStats": {
+      "hp": 50,
+      "atk": 52,
+      "def": 48,
+      "spa": 65,
+      "spd": 50,
+      "spe": 55
+    },
+    "moves": [
+      10,
+      55,
+      39
+    ],
+    "evo": "golduck",
+    "expOnDefeat": 64,
+    "catchRate": 190,
+    "evolveAt": 33,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "golduck": {
+    "num": 55,
+    "species": "Golduck",
+    "types": [
+      "Water"
+    ],
+    "baseStats": {
+      "hp": 80,
+      "atk": 82,
+      "def": 78,
+      "spa": 95,
+      "spd": 80,
+      "spe": 85
+    },
+    "moves": [
+      55,
+      56,
+      163
+    ],
+    "evo": "",
+    "expOnDefeat": 175,
+    "catchRate": 75,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "mankey": {
+    "num": 56,
+    "species": "Mankey",
+    "types": [
+      "Fighting"
+    ],
+    "baseStats": {
+      "hp": 40,
+      "atk": 80,
+      "def": 35,
+      "spa": 35,
+      "spd": 45,
+      "spe": 70
+    },
+    "moves": [
+      10,
+      33,
+      359
+    ],
+    "evo": "primeape",
+    "expOnDefeat": 61,
+    "catchRate": 190,
+    "evolveAt": 28,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "primeape": {
+    "num": 57,
+    "species": "Primeape",
+    "types": [
+      "Fighting"
+    ],
+    "baseStats": {
+      "hp": 65,
+      "atk": 105,
+      "def": 60,
+      "spa": 60,
+      "spd": 70,
+      "spe": 95
+    },
+    "moves": [
+      33,
+      163,
+      359
+    ],
+    "evo": "",
+    "expOnDefeat": 159,
+    "catchRate": 75,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "growlithe": {
+    "num": 58,
+    "species": "Growlithe",
+    "types": [
+      "Fire"
+    ],
+    "baseStats": {
+      "hp": 55,
+      "atk": 70,
+      "def": 45,
+      "spa": 70,
+      "spd": 50,
+      "spe": 60
+    },
+    "moves": [
+      44,
+      52,
+      45
+    ],
+    "evo": "",
+    "expOnDefeat": 70,
+    "catchRate": 190,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "arcanine": {
+    "num": 59,
+    "species": "Arcanine",
+    "types": [
+      "Fire"
+    ],
+    "baseStats": {
+      "hp": 90,
+      "atk": 110,
+      "def": 80,
+      "spa": 100,
+      "spd": 80,
+      "spe": 95
+    },
+    "moves": [
+      44,
+      53,
+      245
+    ],
+    "evo": "",
+    "expOnDefeat": 194,
+    "catchRate": 75,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "poliwag": {
+    "num": 60,
+    "species": "Poliwag",
+    "types": [
+      "Water"
+    ],
+    "baseStats": {
+      "hp": 40,
+      "atk": 50,
+      "def": 40,
+      "spa": 40,
+      "spd": 40,
+      "spe": 90
+    },
+    "moves": [
+      33,
+      55
+    ],
+    "evo": "poliwhirl",
+    "expOnDefeat": 60,
+    "catchRate": 255,
+    "evolveAt": 25,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "poliwhirl": {
+    "num": 61,
+    "species": "Poliwhirl",
+    "types": [
+      "Water"
+    ],
+    "baseStats": {
+      "hp": 65,
+      "atk": 65,
+      "def": 65,
+      "spa": 50,
+      "spd": 50,
+      "spe": 90
+    },
+    "moves": [
+      33,
+      55,
+      56
+    ],
+    "evo": "",
+    "expOnDefeat": 135,
+    "catchRate": 120,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "abra": {
+    "num": 63,
+    "species": "Abra",
+    "types": [
+      "Psychic"
+    ],
+    "baseStats": {
+      "hp": 25,
+      "atk": 20,
+      "def": 15,
+      "spa": 105,
+      "spd": 55,
+      "spe": 90
+    },
+    "moves": [
+      33
+    ],
+    "evo": "kadabra",
+    "expOnDefeat": 62,
+    "catchRate": 200,
+    "evolveAt": 16,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "kadabra": {
+    "num": 64,
+    "species": "Kadabra",
+    "types": [
+      "Psychic"
+    ],
+    "baseStats": {
+      "hp": 40,
+      "atk": 35,
+      "def": 30,
+      "spa": 120,
+      "spd": 70,
+      "spe": 105
+    },
+    "moves": [
+      33,
+      304
+    ],
+    "evo": "",
+    "expOnDefeat": 140,
+    "catchRate": 100,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "alakazam": {
+    "num": 65,
+    "species": "Alakazam",
+    "types": [
+      "Psychic"
+    ],
+    "baseStats": {
+      "hp": 55,
+      "atk": 50,
+      "def": 45,
+      "spa": 135,
+      "spd": 95,
+      "spe": 120
+    },
+    "moves": [
+      33,
+      304,
+      411
+    ],
+    "evo": "",
+    "expOnDefeat": 225,
+    "catchRate": 50,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "machop": {
+    "num": 66,
+    "species": "Machop",
+    "types": [
+      "Fighting"
+    ],
+    "baseStats": {
+      "hp": 70,
+      "atk": 80,
+      "def": 50,
+      "spa": 35,
+      "spd": 35,
+      "spe": 35
+    },
+    "moves": [
+      33,
+      36,
+      359
+    ],
+    "evo": "machoke",
+    "expOnDefeat": 61,
+    "catchRate": 180,
+    "evolveAt": 28,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "machoke": {
+    "num": 67,
+    "species": "Machoke",
+    "types": [
+      "Fighting"
+    ],
+    "baseStats": {
+      "hp": 80,
+      "atk": 100,
+      "def": 70,
+      "spa": 50,
+      "spd": 60,
+      "spe": 45
+    },
+    "moves": [
+      33,
+      359,
+      36
+    ],
+    "evo": "",
+    "expOnDefeat": 142,
+    "catchRate": 90,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "machamp": {
+    "num": 68,
+    "species": "Machamp",
+    "types": [
+      "Fighting"
+    ],
+    "baseStats": {
+      "hp": 90,
+      "atk": 130,
+      "def": 80,
+      "spa": 65,
+      "spd": 85,
+      "spe": 55
+    },
+    "moves": [
+      36,
+      359,
+      411
+    ],
+    "evo": "",
+    "expOnDefeat": 227,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "bellsprout": {
+    "num": 69,
+    "species": "Bellsprout",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 50,
+      "atk": 75,
+      "def": 35,
+      "spa": 70,
+      "spd": 30,
+      "spe": 40
+    },
+    "moves": [
+      22,
+      33,
+      77
+    ],
+    "evo": "weepinbell",
+    "expOnDefeat": 60,
+    "catchRate": 255,
+    "evolveAt": 21,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "weepinbell": {
+    "num": 70,
+    "species": "Weepinbell",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 65,
+      "atk": 90,
+      "def": 50,
+      "spa": 85,
+      "spd": 45,
+      "spe": 55
+    },
+    "moves": [
+      22,
+      77,
+      412
+    ],
+    "evo": "",
+    "expOnDefeat": 137,
+    "catchRate": 120,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "victreebel": {
+    "num": 71,
+    "species": "Victreebel",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 80,
+      "atk": 105,
+      "def": 65,
+      "spa": 100,
+      "spd": 70,
+      "spe": 70
+    },
+    "moves": [
+      22,
+      77,
+      572
+    ],
+    "evo": "",
+    "expOnDefeat": 221,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "geodude": {
+    "num": 74,
+    "species": "Geodude",
+    "types": [
+      "Rock",
+      "Ground"
+    ],
+    "baseStats": {
+      "hp": 40,
+      "atk": 80,
+      "def": 100,
+      "spa": 30,
+      "spd": 30,
+      "spe": 20
+    },
+    "moves": [
+      33,
+      36
+    ],
+    "evo": "graveler",
+    "expOnDefeat": 60,
+    "catchRate": 255,
+    "evolveAt": 25,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "graveler": {
+    "num": 75,
+    "species": "Graveler",
+    "types": [
+      "Rock",
+      "Ground"
+    ],
+    "baseStats": {
+      "hp": 55,
+      "atk": 95,
+      "def": 115,
+      "spa": 45,
+      "spd": 45,
+      "spe": 35
+    },
+    "moves": [
+      33,
+      36,
+      38
+    ],
+    "evo": "",
+    "expOnDefeat": 137,
+    "catchRate": 120,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "golem": {
+    "num": 76,
+    "species": "Golem",
+    "types": [
+      "Rock",
+      "Ground"
+    ],
+    "baseStats": {
+      "hp": 80,
+      "atk": 120,
+      "def": 130,
+      "spa": 55,
+      "spd": 65,
+      "spe": 45
+    },
+    "moves": [
+      33,
+      36,
+      38
+    ],
+    "evo": "",
+    "expOnDefeat": 223,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "magnemite": {
+    "num": 81,
+    "species": "Magnemite",
+    "types": [
+      "Electric"
+    ],
+    "baseStats": {
+      "hp": 25,
+      "atk": 35,
+      "def": 70,
+      "spa": 95,
+      "spd": 55,
+      "spe": 45
+    },
+    "moves": [
+      33,
+      84
+    ],
+    "evo": "magneton",
+    "expOnDefeat": 65,
+    "catchRate": 190,
+    "evolveAt": 30,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "magneton": {
+    "num": 82,
+    "species": "Magneton",
+    "types": [
+      "Electric"
+    ],
+    "baseStats": {
+      "hp": 50,
+      "atk": 60,
+      "def": 95,
+      "spa": 120,
+      "spd": 70,
+      "spe": 70
+    },
+    "moves": [
+      84,
+      85,
+      435
+    ],
+    "evo": "",
+    "expOnDefeat": 163,
+    "catchRate": 60,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "gastly": {
+    "num": 92,
+    "species": "Gastly",
+    "types": [
+      "Ghost",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 30,
+      "atk": 35,
+      "def": 30,
+      "spa": 100,
+      "spd": 35,
+      "spe": 80
+    },
+    "moves": [
+      77,
+      421
+    ],
+    "evo": "haunter",
+    "expOnDefeat": 62,
+    "catchRate": 190,
+    "evolveAt": 25,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "haunter": {
+    "num": 93,
+    "species": "Haunter",
+    "types": [
+      "Ghost",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 45,
+      "atk": 50,
+      "def": 45,
+      "spa": 115,
+      "spd": 55,
+      "spe": 95
+    },
+    "moves": [
+      77,
+      421,
+      44
+    ],
+    "evo": "",
+    "expOnDefeat": 142,
+    "catchRate": 90,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "gengar": {
+    "num": 94,
+    "species": "Gengar",
+    "types": [
+      "Ghost",
+      "Poison"
+    ],
+    "baseStats": {
+      "hp": 60,
+      "atk": 65,
+      "def": 60,
+      "spa": 130,
+      "spd": 75,
+      "spe": 110
+    },
+    "moves": [
+      77,
+      421,
+      44
+    ],
+    "evo": "",
+    "expOnDefeat": 225,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "onix": {
+    "num": 95,
+    "species": "Onix",
+    "types": [
+      "Rock",
+      "Ground"
+    ],
+    "baseStats": {
+      "hp": 35,
+      "atk": 45,
+      "def": 160,
+      "spa": 30,
+      "spd": 45,
+      "spe": 70
+    },
+    "moves": [
+      33,
+      21,
+      36
+    ],
+    "evo": "",
+    "expOnDefeat": 77,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "magikarp": {
+    "num": 129,
+    "species": "Magikarp",
+    "types": [
+      "Water"
+    ],
+    "baseStats": {
+      "hp": 20,
+      "atk": 10,
+      "def": 55,
+      "spa": 15,
+      "spd": 20,
+      "spe": 80
+    },
+    "moves": [
+      33
+    ],
+    "evo": "gyarados",
+    "expOnDefeat": 40,
+    "catchRate": 255,
+    "evolveAt": 20,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "gyarados": {
+    "num": 130,
+    "species": "Gyarados",
+    "types": [
+      "Water",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 95,
+      "atk": 125,
+      "def": 79,
+      "spa": 60,
+      "spd": 100,
+      "spe": 81
+    },
+    "moves": [
+      44,
+      56,
+      401
+    ],
+    "evo": "",
+    "expOnDefeat": 189,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "eevee": {
+    "num": 133,
+    "species": "Eevee",
+    "types": [
+      "Normal"
+    ],
+    "baseStats": {
+      "hp": 55,
+      "atk": 55,
+      "def": 50,
+      "spa": 45,
+      "spd": 65,
+      "spe": 55
+    },
+    "moves": [
+      33,
+      98,
+      44
+    ],
+    "evo": "",
+    "expOnDefeat": 65,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "snorlax": {
+    "num": 143,
+    "species": "Snorlax",
+    "types": [
+      "Normal"
+    ],
+    "baseStats": {
+      "hp": 160,
+      "atk": 110,
+      "def": 65,
+      "spa": 65,
+      "spd": 110,
+      "spe": 30
+    },
+    "moves": [
+      33,
+      36,
+      38
+    ],
+    "evo": "",
+    "expOnDefeat": 189,
+    "catchRate": 25,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "dratini": {
+    "num": 147,
+    "species": "Dratini",
+    "types": [
+      "Dragon"
+    ],
+    "baseStats": {
+      "hp": 41,
+      "atk": 64,
+      "def": 45,
+      "spa": 50,
+      "spd": 50,
+      "spe": 50
+    },
+    "moves": [
+      33,
+      21,
+      337
+    ],
+    "evo": "dragonair",
+    "expOnDefeat": 60,
+    "catchRate": 45,
+    "evolveAt": 30,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "dragonair": {
+    "num": 148,
+    "species": "Dragonair",
+    "types": [
+      "Dragon"
+    ],
+    "baseStats": {
+      "hp": 61,
+      "atk": 84,
+      "def": 65,
+      "spa": 70,
+      "spd": 70,
+      "spe": 70
+    },
+    "moves": [
+      21,
+      337,
+      85
+    ],
+    "evo": "dragonite",
+    "expOnDefeat": 147,
+    "catchRate": 45,
+    "evolveAt": 55,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  },
+  "dragonite": {
+    "num": 149,
+    "species": "Dragonite",
+    "types": [
+      "Dragon",
+      "Flying"
+    ],
+    "baseStats": {
+      "hp": 91,
+      "atk": 134,
+      "def": 95,
+      "spa": 100,
+      "spd": 100,
+      "spe": 80
+    },
+    "moves": [
+      337,
+      245,
+      434
+    ],
+    "evo": "",
+    "expOnDefeat": 270,
+    "catchRate": 45,
+    "evolveAt": -1,
+    "xOffset": 0,
+    "yOffset": 0,
+    "fps": 1
+  }
 }

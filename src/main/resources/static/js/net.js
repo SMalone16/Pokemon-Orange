@@ -16,7 +16,8 @@ const MESSAGE_TYPE = {
     UPDATE_ACTIVE_POKEMON: 14,
     UPDATE_TEAM: 15,
     OPEN_POKE_CONSOLE: 16,
-    PURCHASE_ORDER: 17
+    PURCHASE_ORDER: 17,
+	HEARTBEAT: 18
 };
 
 const BATTLE_ACTION = {
@@ -109,14 +110,9 @@ class Net {
 	}
 
 	sendPacket(type, payload) {
-		if (this.socket.readyState == this.socket.CLOSED) {
-			throw "Socket closed...";
-		}
-
-		waitForSocketConnection(this.socket, function(socket) {
-
-			socket.send(net.packet(type, payload));
-		}.bind(this));
+		if (!this.socket || this.socket.readyState !== WebSocket.OPEN || !this.connected) return false;
+		this.socket.send(this.packet(type, payload));
+		return true;
 	}
 
 	packet(type, payload) {
@@ -128,31 +124,55 @@ class Net {
 		});
 	}
 
+	showConnection(message) {
+		const banner = document.getElementById("connection-status");
+		if (banner) {
+			banner.textContent = message || "";
+			banner.hidden = !message;
+		}
+	}
 	connect(id, token) {
-
-		console.log(id);
-		net.id = id;
+		clearTimeout(this.retryTimer);
+		clearInterval(this.heartbeat);
+		this.connected = false;
+		this.id = id;
+		this.token = token;
 		Game.player.id = id;
-		net.token = token;
-
-		this.socket = new WebSocket(this.cfg.url);
-		this.socket.onmessage = this.handleMsg.bind(this);
-
-		this.socket.onerror = function() {
-			game.state.start('Home');
+		if (this.socket) {
+			this.socket.onclose = null;
+			this.socket.onerror = null;
+			this.socket.close();
+		}
+		const socket = new WebSocket(this.cfg.url);
+		this.socket = socket;
+		this.showConnection(this.retryCount ? "Reconnecting…" : "Connecting…");
+		socket.onopen = () => {
+			if (this.socket === socket) socket.send(this.packet(MESSAGE_TYPE.CONNECT, {token: token}));
 		};
-
-		this.socket.onclose = function() {
-			game.state.start('Home');
+		socket.onmessage = event => {
+			if (this.socket === socket) this.handleMsg(event);
 		};
-
-
-		this.sendPacket(MESSAGE_TYPE.CONNECT, {
-			token: token
-		});
+		socket.onerror = () => {};
+		socket.onclose = event => {
+			if (this.socket !== socket || this.manualClose) return;
+			this.connected = false;
+			clearInterval(this.heartbeat);
+			if (event.code === 1008 && event.reason === "Invalid session") {
+				Cookies.remove("id");
+				Cookies.remove("token");
+				this.retryCount = 0;
+				this.showConnection("Session expired. Choose a new unused name.");
+				game.state.start("Home");
+				return;
+			}
+			this.retryCount = (this.retryCount || 0) + 1;
+			const delay = Math.min(15000, 1000 * Math.pow(2, Math.min(4, this.retryCount - 1)));
+			this.showConnection("Connection lost. Reconnecting automatically…");
+			this.retryTimer = setTimeout(() => this.connect(id, token), delay + Math.random() * 400);
+		};
 	}
 
-	getChunk(cb) {
+	getChunk(cb, fail) {
 
 		let id = this.chunkId;
 
@@ -162,7 +182,7 @@ class Net {
 
 		$.getJSON(this.chunkBaseURL + id.toString() + ".json", function(data) {
 			cb(new Chunk(id, data));
-		});
+		}).fail(function() { if (fail) fail(); });
 
 	}
 
@@ -180,8 +200,6 @@ class Net {
 
 	async initPacketHandler(msg) {
 
-		console.log(msg);
-
 		if (Battle.inBattle) {
 			if (Battle.showing != undefined) {
 				await Battle.showing;
@@ -190,18 +208,20 @@ class Net {
 			Battle.endBattle();
 		}
 
-		Cookies.set("id", net.id, { secure: location.protocol === "https:", sameSite: "Strict" });
-		Cookies.set("token", net.token, { secure: location.protocol === "https:", sameSite: "Strict" });
+		Cookies.set("id", net.id, { expires: 7, secure: location.protocol === "https:", sameSite: "Strict" });
+		Cookies.set("token", net.token, { expires: 7, secure: location.protocol === "https:", sameSite: "Strict" });
+		const firstJoin = game.state.current === 'Home';
+		this.connected = true;
+		this.retryCount = 0;
+		this.showConnection('');
+		clearInterval(this.heartbeat);
+		this.heartbeat = setInterval(() => this.sendPacket(MESSAGE_TYPE.HEARTBEAT, {}), 20000);
 
 		Game.player.id = net.id;
 
 		let loc = msg.payload.location;
 
-		if (Game.ready) {
-			Game.player.showTeleport(loc.col, loc.row, loc.chunk_file, function() {
-				net.chunkId = loc.chunk_file;
-			});
-		}
+		if (Game.ready && Game.player.tweenRunning()) Game.player.tween.stop(false);
 		net.chunkId = loc.chunk_file;
 
 		Game.player.setPos(loc.col, loc.row);
@@ -216,6 +236,8 @@ class Net {
 			}
 		}
 
+		Game.clearPlayers();
+		Game.players = {};
 		let players = msg.payload.players;
 		for(let i = 0; i < players.length; i++) {
 
@@ -236,12 +258,11 @@ class Net {
 			newPlayer.username = player.username;
 			newPlayer.elo = player.elo;
 			newPlayer.pokemon = player.pokemon;
-
-			console.log(newPlayer);
 			Game.players[player.id] = newPlayer;
 
 		}
 
+		if (firstJoin) game.state.start('Game');
 	}
 
 	gamePacketHandler(msg) {
@@ -267,15 +288,12 @@ class Net {
 		// op codes
 		let ops = msg.payload.ops;
 		if (ops != undefined) {
-			console.log(msg);
 
 			for(let i = 0; i < ops.length; i++) {
 				let op = ops[i];
 
 				let code = op.code;
 				let id = op.id;
-
-				console.log(op);
 
 				if (code == OP_CODES.PLAYER_ENTERED_CHUNK) {
 
@@ -360,8 +378,10 @@ class Net {
 			}
 
 			if (Game.players[id] == undefined) {
-                //console.log(Game.player.pokemon);
-				continue;
+				let p = new Player();
+				p.id = id;
+				p.username = update.username;
+				Game.players[id] = p;
 			}
 
 			if (Game.players[id].sprite == undefined || Game.players[id].sprite.alive == false || Game.players[id].sprite.x < 0) {
@@ -451,7 +471,6 @@ class Net {
 		}
 
 		let payload = msg.payload;
-		console.log(msg);
 
 		let loc = payload.location;
 
@@ -553,7 +572,6 @@ class Net {
   	}
 
   	requestChallengeHandler(msg) {
-  		console.log(msg);
   		let payload = msg.payload;
 
   		let challengerId = payload.from;

@@ -58,7 +58,8 @@ public class PlayerWebSocketHandler {
     UPDATE_ACTIVE_POKEMON,
     UPDATE_TEAM,
     OPEN_POKE_CONSOLE,
-    BUY_ITEM
+    BUY_ITEM,
+    HEARTBEAT
   }
 
   public static enum OP_CODES {
@@ -88,7 +89,7 @@ public class PlayerWebSocketHandler {
 
   @OnWebSocketConnect
   public void onConnect(Session session) throws Exception {
-    // do we actually need to do anything here?
+    session.setIdleTimeout(120000);
   }
 
   @OnWebSocketClose
@@ -124,6 +125,12 @@ public class PlayerWebSocketHandler {
     switch (MESSAGE_TYPES[type]) {
     case CONNECT:
       handleConnect(session, payload);
+      break;
+    case HEARTBEAT:
+      User heartbeatUser = UserManager.getUserById(payload.get("id").getAsInt());
+      if (heartbeatUser == null || heartbeatUser.getSession() != session) {
+        session.close(1008, "Invalid session");
+      }
       break;
     case PLAYER_REQUEST_PATH:
       handlePath(session, payload);
@@ -171,8 +178,7 @@ public class PlayerWebSocketHandler {
       System.out.println(u.getUsername() + " connected.");
       // TODO: Inform all other users of their connection?
     } catch (AuthException e1) {
-      // their credentials were bad or something went wrong
-      session.close();
+      session.close(1008, "Invalid session");
     }
   }
 
@@ -188,15 +194,20 @@ public class PlayerWebSocketHandler {
       return;
     }
     JsonArray path = payload.getAsJsonArray("path");
-    Chunk c = u.getLocation().getChunk();
+    if (path == null || path.size() < 2 || path.size() > 256) return;
+    Location current = u.getLocation();
+    Chunk c = current.getChunk();
     List<Location> locs = new ArrayList<>();
     for (JsonElement o : path) {
       JsonObject tile = (JsonObject) o;
       Location loc = new Location(c, tile.get("row").getAsInt(),
           tile.get("col").getAsInt());
+      if (loc.getRow() < 0 || loc.getRow() >= c.getHeight() || loc.getCol() < 0 || loc.getCol() >= c.getWidth()) return;
+      Location previous = locs.isEmpty() ? current : locs.get(locs.size() - 1);
+      if (Math.abs(previous.getRow() - loc.getRow()) + Math.abs(previous.getCol() - loc.getCol()) > (locs.isEmpty() ? 2 : 1)) return;
       locs.add(loc);
     }
-    u.setPath(new Path(locs, locs.get(0).getChunk().getEntities(u)));
+    u.setPath(new Path(locs, c.getEntities(u)));
   }
 
   private static void handleTrade(Session session, JsonObject payload) {

@@ -37,7 +37,7 @@ public class User extends Trainer implements SQLBatchSavable {
   private final String username;
   private final String email;
   private String sessionToken;
-  private Session session;
+  private volatile Session session;
 
   private boolean changed = false;
 
@@ -249,10 +249,11 @@ public class User extends Trainer implements SQLBatchSavable {
   }
 
   public void setSession(Session s) {
-    if (this.session != null && this.session.isOpen()) {
-      this.session.close();
-    }
+    Session previous = this.session;
     this.session = s;
+    if (previous != null && previous != s && previous.isOpen()) {
+      previous.close();
+    }
   }
 
   public Session getSession() {

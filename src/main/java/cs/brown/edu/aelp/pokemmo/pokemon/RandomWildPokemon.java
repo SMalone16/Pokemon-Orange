@@ -1,56 +1,29 @@
-
 package cs.brown.edu.aelp.pokemmo.pokemon;
-
-import com.google.common.collect.ImmutableList;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomWildPokemon {
-  private static List<String> normalPokemon = new ImmutableList
-      .Builder<String>()
-      .add("bulbasaur")
-      .add("ivysaur")
-      .add("charmander")
-      .add("charmeleon")
-      .add("squirtle")
-      .add("wartortle")
-      .add("pichu")
-      .add("pikachu")
-      .build();
-
-  private static List<String> specialPokemon = new ImmutableList
-      .Builder<String>()
-      .add("venusaur")
-      .add("charizard")
-      .add("blastoise")
-      .add("raichu")
-      .build();
-
-  private static List<String> legendaryPokemon = new ImmutableList
-      .Builder<String>()
-      .add("arceus")
-      .add("giratina")
-      .add("groudon")
-      .build();
-
-  public static Pokemon generateWildPokemon(int averageLevel){
-    int random = ThreadLocalRandom.current().nextInt(0, 101);
-      if (random > 95){
-        int level = (averageLevel < 65) ? 65 : averageLevel;
-        return PokemonLoader.load(randomElementFromList(legendaryPokemon), Pokemon.calcXpByLevel(level));
-      } else if (random > 65) {
-        int level = (averageLevel < 35) ? 35 : averageLevel;
-        return PokemonLoader.load(randomElementFromList(specialPokemon), Pokemon.calcXpByLevel(level));
-      } else {
-        int level = (averageLevel <= 0) ? 1 : averageLevel - 2;
-        return PokemonLoader.load(randomElementFromList(normalPokemon), Pokemon.calcXpByLevel(level));
-      }
+  // Kanto-inspired encounter bands adapted to the existing world and team progression.
+  private static final String[][] POOLS = {
+    {"pidgey","pidgey","rattata","rattata","caterpie","weedle","pikachu","spearow"},
+    {"pidgey","spearow","ekans","sandshrew","nidoranm","nidoranf","oddish","bellsprout","jigglypuff","metapod","kakuna","zubat","geodude","magnemite"},
+    {"raticate","pidgeotto","fearow","mankey","machop","geodude","zubat","onix","diglett","psyduck","poliwag","abra","gastly","growlithe","vulpix","magikarp"},
+    {"golbat","graveler","machoke","haunter","kadabra","gloom","weepinbell","primeape","nidorina","nidorino","butterfree","beedrill","golduck","poliwhirl","dugtrio","arbok","sandslash","magneton","dratini","eevee"},
+    {"pidgeot","raichu","arcanine","ninetales","golem","alakazam","machamp","gengar","vileplume","victreebel","dragonair","gyarados","snorlax","venusaur","charizard","blastoise"}
+  };
+  private static final int[] MIN = {2, 6, 13, 22, 32};
+  private static final int[] MAX = {5, 12, 21, 31, 50};
+  public static Pokemon generateWildPokemon(int averageLevel) {
+    ThreadLocalRandom r = ThreadLocalRandom.current();
+    int band = averageLevel < 8 ? 0 : averageLevel < 15 ? 1 : averageLevel < 24 ? 2 : averageLevel < 35 ? 3 : 4;
+    if (band > 0 && r.nextInt(100) < 15) band--;
+    else if (band < 4 && averageLevel >= MAX[band] - 2 && r.nextInt(100) < 10) band++;
+    int level = r.nextInt(MIN[band], MAX[band] + 1);
+    if (averageLevel >= 50) level = Math.min(70, Math.max(level, averageLevel - r.nextInt(3, 12)));
+    String species = POOLS[band][r.nextInt(POOLS[band].length)];
+    return PokemonLoader.load(species, Pokemon.calcXpByLevel(level));
   }
-
   public static <T> T randomElementFromList(List<T> list) {
-    int random = ThreadLocalRandom.current().nextInt(0, list.size());
-    return list.get(random);
+    return list.get(ThreadLocalRandom.current().nextInt(list.size()));
   }
 }

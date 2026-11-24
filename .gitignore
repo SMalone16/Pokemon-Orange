@@ -87,3 +87,6 @@ local.properties
 /.env.*
 !/.env.example
 /orange-backup.sql
+
+/art-overrides/*
+!/art-overrides/.gitkeep

@@ -31,6 +31,7 @@ import cs.brown.edu.aelp.pokemmo.pokemon.moves.MoveLoader;
 import cs.brown.edu.aelp.pokemmo.pokemon.moves.complex.PoisonMove;
 import cs.brown.edu.aelp.pokemmo.pokemon.moves.complex.Wish;
 import cs.brown.edu.aelp.pokemmo.server.LoginHandler;
+import cs.brown.edu.aelp.pokemmo.server.GuestHandler;
 import cs.brown.edu.aelp.pokemmo.server.RegisterHandler;
 import cs.brown.edu.aelp.util.JsonFile;
 import freemarker.template.Configuration;
@@ -268,6 +269,7 @@ public final class Main {
     Spark.get("/", new IndexHandler(), freeMarker);
     Spark.post("/register", new RegisterHandler());
     Spark.post("/login", new LoginHandler());
+    Spark.post("/join", new GuestHandler());
     Spark.get("/health", (req, res) -> "ok");
     Spark.awaitInitialization();
     System.out.printf("Pokemon Orange ready on port %d.%n", port);

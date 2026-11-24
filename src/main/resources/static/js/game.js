@@ -27,6 +27,7 @@ var Game = {
 Game.init = function() {
 
 	Game.ready = false;
+	Game.loadingChunk = null;
 	//Game.easystar = new EasyStar.js();
 	Game.leaderboard = [];
 	Game.playerFrozen = false;
@@ -37,6 +38,7 @@ Game.shutdown = function() {
 	game.world.removeAll();
 
 	Game.chunkId = false;
+	Game.loadingChunk = null;
 	Game.player.sprite = undefined;
 	Game.ready = false;
 }
@@ -45,23 +47,24 @@ Game.update = function() {
 
 	// We're in a different chunk.
 	let chunkId = net.getCurrentChunkId();
+	if (!net.connected || !chunkId || Game.loadingChunk) return;
 	if (chunkId != Game.chunkId) {
 		this.loadCurrentChunk(true);
 		//Game.chunkId = net.chunkId;
 		return;
 	}
 
-	if (this.cursors == undefined || Battle.inBattle || Game.playerFrozen) {
+	if (!net.connected || !Game.ready || !Game.player.sprite || !Game.collisionMatrix || !this.wasd || this.cursors == undefined || Battle.inBattle || Game.playerFrozen || /^(INPUT|TEXTAREA)$/.test(document.activeElement && document.activeElement.tagName)) {
 		return;
 	}
 
-	if (this.cursors.left.isDown) {
+	if (this.cursors.left.isDown || this.wasd.A.isDown) {
 		this.player.step('left', (this.cursors.left.shiftKey) ? 2 : 1);
-	} else if (this.cursors.right.isDown) {
+	} else if (this.cursors.right.isDown || this.wasd.D.isDown) {
 		this.player.step('right', (this.cursors.right.shiftKey) ? 2 : 1);
-	} else if (this.cursors.up.isDown) {
+	} else if (this.cursors.up.isDown || this.wasd.W.isDown) {
 		this.player.step('up', (this.cursors.up.shiftKey) ? 2 : 1)
-	} else if (this.cursors.down.isDown) {
+	} else if (this.cursors.down.isDown || this.wasd.S.isDown) {
 		this.player.step('down', (this.cursors.down.shiftKey) ? 2 : 1);
 	}
 
@@ -205,7 +208,7 @@ Game.handleMapClick = function(layer, pointer) {
 		coords.y--;
 	}
 
-	if (!Game.playerFrozen) {
+	if (net.connected && Game.ready && Game.easystar && !Battle.inBattle && !Game.playerFrozen) {
 		Game.player.prepareMovement(coords);
 	}
 };
@@ -267,7 +270,9 @@ Game.clearPlayers = function() {
 }
 
 Game.loadCurrentChunk = function(clear) {
-
+	const requestedChunk = net.chunkId;
+	if (!requestedChunk || Game.loadingChunk) return;
+	Game.loadingChunk = requestedChunk;
 	Game.chunkId = false;
 
 	if (Game.map != undefined) {
@@ -276,6 +281,7 @@ Game.loadCurrentChunk = function(clear) {
 		}
 
 		Game.map.destroy();
+		Game.map = undefined;
 		game.world.removeAll();
 	}
 
@@ -284,6 +290,11 @@ Game.loadCurrentChunk = function(clear) {
 	Game.clearPlayers();
 
 	net.getChunk(function(chunk) {
+		if (Game.loadingChunk !== requestedChunk) return;
+		if (net.chunkId !== requestedChunk || game.state.current !== 'Game') {
+			Game.loadingChunk = null;
+			return;
+		}
 
 		if (Game.groundMapLayers != undefined) {
 			Game.groundMapLayers.destroy();
@@ -334,8 +345,13 @@ Game.loadCurrentChunk = function(clear) {
 		Game.clearPlayers();
 
 		Game.cursors = game.input.keyboard.createCursorKeys();
+		Game.wasd = game.input.keyboard.addKeys({W: Phaser.Keyboard.W, A: Phaser.Keyboard.A, S: Phaser.Keyboard.S, D: Phaser.Keyboard.D});
+		game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP, Phaser.Keyboard.DOWN, Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.W, Phaser.Keyboard.A, Phaser.Keyboard.S, Phaser.Keyboard.D]);
 
-		Game.chunkId = net.chunkId;
+		Game.chunkId = requestedChunk;
+		Game.loadingChunk = null;
+	}, function() {
+		Game.loadingChunk = null;
 	});
 };
 
@@ -782,6 +798,7 @@ function logout() {
 	}
 
     console.log('clicked!');
+    net.manualClose = true;
     Cookies.remove("id");
     Cookies.remove("token");
     location.reload();

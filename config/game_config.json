@@ -1,5 +1,5 @@
 {
-    "save_period" : 60,
+    "save_period" : 30,
     "spawn" :
     {
         "chunk" : 1,

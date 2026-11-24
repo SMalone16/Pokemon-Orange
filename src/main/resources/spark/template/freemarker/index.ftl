@@ -36,6 +36,7 @@
 		</style>
 	</head>
 	<body style='background-color: grey; overflow: hidden;'>
+		<div id="connection-status" hidden style="position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:100;background:#203040;color:white;padding:10px 16px;border-radius:8px;font:14px Arial"></div>
 		<div id="main">
 		
 			<div style="margin-left: auto; visibility: hidden;"></div>

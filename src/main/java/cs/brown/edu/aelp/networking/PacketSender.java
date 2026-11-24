@@ -17,16 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import org.eclipse.jetty.websocket.api.WebSocketException;
+import java.util.concurrent.Future;
+import org.eclipse.jetty.websocket.api.Session;
 
 public final class PacketSender {
 
   private static Map<Integer, List<JsonObject>> chunkOps = new ConcurrentHashMap<>();
 
+  private static final Map<Session, Future<Void>> pendingSnapshots = new ConcurrentHashMap<>();
+
   private PacketSender() {
   }
 
   public static void sendGamePackets() {
+    pendingSnapshots.keySet().removeIf(session -> !session.isOpen());
     for (Chunk c : Main.getWorld().getAllChunks()) {
 
       JsonObject message = new JsonObject();
@@ -48,7 +52,7 @@ public final class PacketSender {
       for (User u : c.getUsers()) {
 
         // System.out.print("sending packet to: " + u.getUsername());
-        sendPacket(u, message);
+        sendSnapshot(u, message);
       }
     }
   }
@@ -200,12 +204,24 @@ public final class PacketSender {
      */
   }
 
+  private static void sendSnapshot(User u, JsonObject message) {
+    Session session = u.getSession();
+    if (session == null || !session.isOpen()) return;
+    Future<Void> previous = pendingSnapshots.get(session);
+    if (previous != null && !previous.isDone()) return;
+    try {
+      pendingSnapshots.put(session, session.getRemote().sendStringByFuture(Main.GSON().toJson(message)));
+    } catch (RuntimeException e) {
+      pendingSnapshots.remove(session);
+    }
+  }
+
   private static void sendPacket(User u, JsonObject message) {
-    if (u.isConnected()) {
+    if (u != null && u.isConnected()) {
       try {
         u.getSession().getRemote()
             .sendStringByFuture(Main.GSON().toJson(message));
-      } catch (WebSocketException e) {
+      } catch (RuntimeException e) {
         System.out.println(
             "WARNING: Tried to send packet to user but socket exception occurred.");
       }

@@ -1,46 +1,42 @@
 # Pokemon Orange
 
-A classroom-hosted adaptation of Pokemon Brown, a Brown University CSCI0320 student project. Explore a shared world, catch and train creatures, trade, battle and enter tournaments. The original project is an experimental game, not a production service.
+Classroom adaptation of Pokemon Brown, a Brown University CSCI0320 student project.
 
-## Start a class server in GitHub Codespaces
+## Start
 
-1. Choose **Code → Codespaces → Create codespace on master**. Wait for the dev container to finish.
-2. In the terminal at the repository root, run:
+In the repository Codespace:
+```bash
+git pull origin master
+bash start.sh
+```
+Open port 4567 privately; test with two separate browser profiles. If permitted by school policy, make the game port public and share the URL during class only. PostgreSQL is private. Students enter an unused fictional name (4–12 letters/numbers); a random starter is assigned. No email, code or password is requested. A random browser token owns the account; the same name cannot be claimed from another browser. Keep the same browser/profile to resume; clearing cookies, logging out or changing devices may require a new name. Legacy accounts can resume with their existing token; the old login screen is no longer offered. Do not use real student names. Chat remains off by default. Name-only registration is open to anyone with the URL; this is not school authentication. Make the port private after class.
 
-   ```bash
-   bash start.sh
-   ```
+## Controls and reconnecting
 
-   The script creates a private random database password and class registration code (once per Codespace), builds with Java 8/Maven, starts PostgreSQL on a private Docker network, and waits for the game to respond. No sudo, Java installation, database JSON, or manual port edits are needed.
-3. Open **Ports → 4567 → Open in Browser**. Test registration and login privately first, then right-click the port and choose **Port Visibility → Public**, if school policy permits. Share the forwarded URL and the class code printed in the terminal.
-4. Students use a fictional 4–12 character alphanumeric player name, the class code, a unique game-only password of at least 8 characters, and a starter with a 4–12 character alphanumeric nickname. No actual emails or school passwords. Chrome recommended.
+WASD and arrow keys move one tile; click-to-move still works. The client attempts automatic reconnection with backoff, heartbeat and existing session token. Saves occur every 30 seconds and on graceful shutdown. Disconnects may cancel an active battle/trade. The legacy server has not been load-tested with 20+ users.
 
-## Optional private smoke test
+## Codespaces timeout
 
-Run `bash smoke-test.sh` after startup. It checks the homepage, locally served browser libraries, rejection of an incorrect class code, registration and login. It creates one disposable fictional test account. It does not replace testing movement, multiplayer, trades and battles in two separate browser profiles.
+Go to https://github.com/settings/codespaces and set the default idle timeout to 120 minutes (or up to 240 if allowed). For an existing Codespace, check the Codespaces VS Code command palette for timeout settings; if a new Codespace is needed, back up before creating it. Keep the editor open while supervising; student web traffic is not a reliable indicator of editor activity. Use `docker compose logs -f game` to monitor actual gameplay logs. A stopped Codespace must be resumed by the owner; the browser cannot restart it. Codespaces are development environments, not permanent game hosting.
 
-## Daily operation
+## Encounters and artwork
 
-- Start again: `bash start.sh`
-- View logs: `docker compose logs -f game` (Ctrl+C exits log viewing only).
-- Stop: `docker compose down` (preserves the database volume).
-- Teacher console: `docker compose attach game` (detach with Ctrl+P then Ctrl+Q; Ctrl+C can stop the game).
-- Show class code: `sed -n 's/^CLASS_CODE=//p' .env`
-- Status: `docker compose ps`
+The roster includes 79 defined species (15 retained and 64 new). Wild encounters are inspired by Kanto's early, middle and late level bands and scale with team progression; this is not an exact Red/Blue route map, learnset or evolution system. Existing legacy species remain loadable for saves. New creatures have original numbered placeholder art unless authorized artwork is supplied.
 
-Keep the same Codespace and do not delete the Docker volume or .env file. Docker data may be lost on a Codespace rebuild or deletion; back up before rebuilding. To back up while the database is running: `docker compose exec -T db pg_dump -U pokemon -d pokemon_orange > orange-backup.sql`. Store the dump securely, never commit it. The game saves periodically (60 seconds by default); attempts a final save on graceful shutdown. Allow time for a periodic save before stopping as an additional precaution.
+PokeAPI hosts original Red/Blue front/back PNGs; their license notice explicitly identifies the images as copyrighted by The Pokémon Company. Public availability and educational purpose alone do not establish permission. See https://github.com/PokeAPI/sprites/blob/master/LICENCE.txt and https://github.com/PokeAPI/sprites. Only if you have appropriate permission, run:
+```bash
+python3 scripts/prepare-sprites.py --download-authorized
+bash start.sh
+```
+The script downloads missing Gen I front/back sprites into git-ignored art-overrides, converts them to compatible single-frame atlases on build, and preserves the original animated assets. You may also supply your own appropriately licensed PNGs as front-species.png/back-species.png in art-overrides. No new third-party sprite files are committed. Do not publish unauthorized art or assume an educational exemption. Existing repository assets also need a rights review before public distribution.
 
-## Classroom defaults and limitations
+## Teacher commands
 
-- Only the game port is published; PostgreSQL is not exposed. The game uses same-origin HTTP requests and secure WebSockets when served over HTTPS.
-- Registration requires a generated classroom code. Login uses each player's game password. The code limits casual registration, not all access to the public URL; it is not a school identity system.
-- Free-text chat is disabled in both the browser and server by default. A teacher can set ENABLE_CHAT=true in .env and restart, but moderation is not provided.
-- This legacy project has not had a full security audit or a 20-player load test. Use pseudonyms, test with multiple browsers, supervise play, follow school policies and make the game port private again after class. Do not expose real student data or leave the server publicly accessible unattended.
-- Codespaces can stop after inactivity, and deleting a Codespace destroys its local storage. Keep the server open during class.
-- Some original visual/gameplay glitches may remain.
-
-## Troubleshooting
-
-Run `docker compose ps` and `docker compose logs --tail=100 db game`. If you change code, rerun `bash start.sh` to rebuild. Never share .env or database credentials.
+- `bash smoke-test.sh`: disposable account and asset test.
+- `docker compose logs -f game`: live logs (Ctrl+C stops viewing).
+- `docker compose ps`: server status.
+- `docker compose attach game`: teacher console; detach Ctrl+P then Ctrl+Q.
+- `docker compose down`: graceful stop; retains database volume.
+- Back up: `docker compose exec -T db pg_dump -U pokemon -d pokemon_orange > orange-backup.sql`. Store securely; do not commit. Do not delete .env or the volume. Rebuilds and Codespace deletion can destroy local Docker data.
 
 Original project: https://github.com/felixs-alt/Pokemon-Brown
