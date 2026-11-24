@@ -65,9 +65,10 @@ public class RegisterHandler implements Route {
       }
     }
 
-    if (!email.toUpperCase()
-        .matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")) {
-      throw new AuthException("Email must be of a valid format.");
+    // The email field is a server-generated database placeholder, never a
+    // student-provided email address. Accept the reserved .invalid domain.
+    if (!email.equals(name + "@players.invalid")) {
+      throw new AuthException("Invalid player account.");
     }
 
     // if (!pass.matches(
